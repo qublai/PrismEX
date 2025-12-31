@@ -1,0 +1,1878 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PrismEX Report - /Users/Qublaikhan_1/PrismEX_v0.3.1_QK_clean/Wireshark-4.6.2-x64.exe</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --low: #10b981;
+      --medium: #f59e0b;
+      --high: #ef4444;
+      --critical: #a855f7;
+    }
+    body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--text)}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .h{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .title{font-size:20px;font-weight:700}
+    .sub{color:var(--muted);margin-top:6px;word-break:break-all}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .card h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px 0;color:var(--muted)}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:8px 12px;font-size:14px}
+    .k{color:var(--muted)}
+    .v{word-break:break-all}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;font-size:12px}
+.btn:hover{background:rgba(255,255,255,.08)}
+.btnrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .lvl-low .dot{background:var(--low)}
+    .lvl-medium .dot{background:var(--medium)}
+    .lvl-high .dot{background:var(--high)}
+    .lvl-critical .dot{background:var(--critical)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .list{margin:0;padding-left:18px}
+    .pill{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);margin:3px 6px 0 0;font-size:12px}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-bottom:1px solid var(--border);padding:8px 6px;text-align:left;font-size:13px;vertical-align:top}
+    .table th{color:var(--muted);font-weight:600}
+    .muted{color:var(--muted)}
+    .footer{margin-top:22px;color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="h">
+      <div>
+        <div class="title">PrismEX v0.3.1</div>
+        <div class="sub mono">/Users/Qublaikhan_1/PrismEX_v0.3.1_QK_clean/Wireshark-4.6.2-x64.exe</div>
+      </div>
+      
+      <div class="btnrow">
+      <button class="btn" id="download-json" type="button">⬇ Download JSON</button>
+      <div class="badge lvl-critical">
+        <span class="dot"></span>
+        <span><strong>Score:</strong> 100/100</span>
+        <span class="muted">CRITICAL</span>
+      </div>
+    </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Target</h2>
+        <div class="kv">
+          <div class="k">Type</div><div class="v">unknown</div>
+          <div class="k">Size</div><div class="v">96624568 bytes</div>
+          <div class="k">MD5</div><div class="v mono">e6a76ed3ed4463c842f6344239a8c4ef</div>
+          <div class="k">SHA1</div><div class="v mono">9680681c8426ed46bbe10533817dd067e73473cf</div>
+          <div class="k">SHA256</div><div class="v mono">373a93e9b5ffa3559938424a2aabd3338786cff7bef084641c2c5e5bfb44325e</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>PE Summary</h2>
+        <div class="kv">
+          <div class="k">Timestamp (UTC)</div><div class="v">2025-03-08 23:05:20</div>
+          <div class="k">Machine</div><div class="v mono">0x14c</div>
+          <div class="k">Subsystem</div><div class="v">2</div>
+          <div class="k">ImageBase</div><div class="v mono">4194304</div>
+          <div class="k">Entrypoint RVA</div><div class="v mono">13983</div>
+          <div class="k">Imphash</div><div class="v mono">46ce5c12b293febbeb513b196aa7f843</div>
+          <div class="k">Is DLL</div><div class="v">False</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Top Score Factors</h2>
+        
+          <ul class="list">
+            
+              <li><span class="mono">+40</span> <strong>yara</strong> — YARA matched 12 rule(s).</li>
+            
+              <li><span class="mono">+25</span> <strong>suspicious_apis</strong> — High-signal API imports (44).</li>
+            
+              <li><span class="mono">+10</span> <strong>imports_evasion</strong> — Evasion / anti-analysis primitives: GetTickCount, Sleep.</li>
+            
+              <li><span class="mono">+10</span> <strong>imports_evasion</strong> — Evasion / anti-analysis primitives: GetTickCount, Sleep.</li>
+            
+              <li><span class="mono">+8</span> <strong>overlay</strong> — File contains an overlay (96295352 bytes).</li>
+            
+              <li><span class="mono">+8</span> <strong>overlay</strong> — File contains an overlay (96295352 bytes).</li>
+            
+          </ul>
+        
+      </div>
+
+      <div class="card">
+        <h2>Indicators</h2>
+        
+          <table class="table">
+            <thead><tr><th>Severity</th><th>ID</th><th>Message</th></tr></thead>
+            <tbody>
+              
+                <tr>
+                  <td>medium</td>
+                  <td class="mono">suspicious_apis</td>
+                  <td>Found 44 suspicious or high-signal API imports.</td>
+                </tr>
+              
+                <tr>
+                  <td>low</td>
+                  <td class="mono">many_strings</td>
+                  <td>Large number of printable strings; could indicate embedded config or packed content.</td>
+                </tr>
+              
+                <tr>
+                  <td>high</td>
+                  <td class="mono">yara_hits</td>
+                  <td>YARA matched 12 rule(s).</td>
+                </tr>
+              
+                <tr>
+                  <td>medium</td>
+                  <td class="mono">overlay</td>
+                  <td>File contains an overlay (96295352 bytes).</td>
+                </tr>
+              
+                <tr>
+                  <td>medium</td>
+                  <td class="mono">imports_evasion</td>
+                  <td>Evasion / anti-analysis primitives: GetTickCount, Sleep.</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+      </div>
+
+      <div class="card">
+        <h2>Heuristics (metrics)</h2>
+        
+        <div class="kv">
+          <div class="k">Overlay</div><div class="v mono">96295352 bytes</div>
+          <div class="k">High entropy sections</div><div class="v">0</div>
+          <div class="k">RWX sections</div><div class="v">0</div>
+          <div class="k">Packerish sections</div><div class="v"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>YARA Matches</h2>
+        
+          
+            <span class="pill mono">{'crypto_signatures.yar': 'CRC32_poly_Constant'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'Xor'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'escalate_priv'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'screenshot'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'win_registry'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'win_token'}</span>
+          
+            <span class="pill mono">{'antidebug_antivm.yar': 'win_files_operation'}</span>
+          
+            <span class="pill mono">{'packer_compiler_signatures.yar': 'IsPE32'}</span>
+          
+            <span class="pill mono">{'packer_compiler_signatures.yar': 'IsWindowsGUI'}</span>
+          
+            <span class="pill mono">{'packer_compiler_signatures.yar': 'IsPacked'}</span>
+          
+            <span class="pill mono">{'packer_compiler_signatures.yar': 'HasOverlay'}</span>
+          
+            <span class="pill mono">{'packer_compiler_signatures.yar': 'HasRichSignature'}</span>
+          
+          
+        
+      </div>
+
+      <div class="card" style="grid-column:1/-1">
+        <h2>Sections</h2>
+        
+          <table class="table">
+            <thead><tr><th>Name</th><th>Entropy</th><th>Exec</th><th>Raw</th><th>VA</th></tr></thead>
+            <tbody>
+            
+              <tr>
+                <td class="mono">.text</td>
+                <td>6.45</td>
+                <td>True</td>
+                <td>26624</td>
+                <td class="mono">4096</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">.rdata</td>
+                <td>5.10</td>
+                <td>False</td>
+                <td>5120</td>
+                <td class="mono">32768</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">.data</td>
+                <td>4.12</td>
+                <td>False</td>
+                <td>1536</td>
+                <td class="mono">40960</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">.ndata</td>
+                <td>0.00</td>
+                <td>False</td>
+                <td>0</td>
+                <td class="mono">172032</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">.rsrc</td>
+                <td>5.09</td>
+                <td>False</td>
+                <td>294912</td>
+                <td class="mono">421888</td>
+              </tr>
+            
+            </tbody>
+          </table>
+        
+      </div>
+
+      <div class="card" style="grid-column:1/-1">
+        <h2>Imports (summary)</h2>
+        
+          <div class="muted">Showing up to 20 DLLs.</div>
+          <table class="table">
+            <thead><tr><th>DLL</th><th>Imported functions (first 20)</th></tr></thead>
+            <tbody>
+            
+              <tr>
+                <td class="mono">ADVAPI32.dll</td>
+                <td class="mono">RegEnumValueW, RegEnumKeyW, RegQueryValueExW, RegSetValueExW, RegCloseKey, RegDeleteValueW, RegDeleteKeyW, AdjustTokenPrivileges, LookupPrivilegeValueW, OpenProcessToken, RegOpenKeyExW, RegCreateKeyExW</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">COMCTL32.dll</td>
+                <td class="mono">ImageList_Destroy, ordinal:17, ImageList_AddMasked, ImageList_Create</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">GDI32.dll</td>
+                <td class="mono">GetDeviceCaps, SetBkColor, SelectObject, DeleteObject, CreateBrushIndirect, CreateFontIndirectW, SetBkMode, SetTextColor</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">KERNEL32.dll</td>
+                <td class="mono">RemoveDirectoryW, lstrcmpiA, GetTempFileNameW, CreateProcessW, CreateDirectoryW, CreateThread, GlobalLock, GlobalUnlock, GetDiskFreeSpaceW, WideCharToMultiByte, lstrcpynW, lstrlenW, SetErrorMode, GetVersionExW, GetCommandLineW, GetTempPathW, GetWindowsDirectoryW, SetEnvironmentVariableW, CopyFileW, WriteFile</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">ole32.dll</td>
+                <td class="mono">CoCreateInstance, OleUninitialize, OleInitialize, IIDFromString, CoTaskMemFree</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">SHELL32.dll</td>
+                <td class="mono">SHGetPathFromIDListW, SHBrowseForFolderW, SHGetFileInfoW, SHFileOperationW, ShellExecuteExW</td>
+              </tr>
+            
+              <tr>
+                <td class="mono">USER32.dll</td>
+                <td class="mono">MessageBoxIndirectW, GetDlgItemTextW, SetDlgItemTextW, CreatePopupMenu, AppendMenuW, TrackPopupMenu, OpenClipboard, EmptyClipboard, SetClipboardData, CloseClipboard, IsWindowVisible, CallWindowProcW, GetMessagePos, CheckDlgButton, LoadCursorW, SetCursor, GetSysColor, SetWindowPos, GetWindowLongW, IsWindowEnabled</td>
+              </tr>
+            
+            </tbody>
+          </table>
+        
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Generated by PrismEX • Offline static analysis • Timing: 34.0179s
+    </div>
+  </div>
+
+  <script id="report-json" type="application/json">{
+  &#34;analysis&#34;: {
+    &#34;directories&#34;: {
+      &#34;debug&#34;: {},
+      &#34;export&#34;: [],
+      &#34;import&#34;: {
+        &#34;ADVAPI32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;RegEnumValueW&#34;,
+            &#34;offset&#34;: 4227072
+          },
+          {
+            &#34;function&#34;: &#34;RegEnumKeyW&#34;,
+            &#34;offset&#34;: 4227076
+          },
+          {
+            &#34;function&#34;: &#34;RegQueryValueExW&#34;,
+            &#34;offset&#34;: 4227080
+          },
+          {
+            &#34;function&#34;: &#34;RegSetValueExW&#34;,
+            &#34;offset&#34;: 4227084
+          },
+          {
+            &#34;function&#34;: &#34;RegCloseKey&#34;,
+            &#34;offset&#34;: 4227088
+          },
+          {
+            &#34;function&#34;: &#34;RegDeleteValueW&#34;,
+            &#34;offset&#34;: 4227092
+          },
+          {
+            &#34;function&#34;: &#34;RegDeleteKeyW&#34;,
+            &#34;offset&#34;: 4227096
+          },
+          {
+            &#34;function&#34;: &#34;AdjustTokenPrivileges&#34;,
+            &#34;offset&#34;: 4227100
+          },
+          {
+            &#34;function&#34;: &#34;LookupPrivilegeValueW&#34;,
+            &#34;offset&#34;: 4227104
+          },
+          {
+            &#34;function&#34;: &#34;OpenProcessToken&#34;,
+            &#34;offset&#34;: 4227108
+          },
+          {
+            &#34;function&#34;: &#34;RegOpenKeyExW&#34;,
+            &#34;offset&#34;: 4227112
+          },
+          {
+            &#34;function&#34;: &#34;RegCreateKeyExW&#34;,
+            &#34;offset&#34;: 4227116
+          }
+        ],
+        &#34;COMCTL32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;ImageList_Destroy&#34;,
+            &#34;offset&#34;: 4227124
+          },
+          {
+            &#34;function&#34;: &#34;None&#34;,
+            &#34;offset&#34;: 4227128
+          },
+          {
+            &#34;function&#34;: &#34;ImageList_AddMasked&#34;,
+            &#34;offset&#34;: 4227132
+          },
+          {
+            &#34;function&#34;: &#34;ImageList_Create&#34;,
+            &#34;offset&#34;: 4227136
+          }
+        ],
+        &#34;GDI32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;GetDeviceCaps&#34;,
+            &#34;offset&#34;: 4227144
+          },
+          {
+            &#34;function&#34;: &#34;SetBkColor&#34;,
+            &#34;offset&#34;: 4227148
+          },
+          {
+            &#34;function&#34;: &#34;SelectObject&#34;,
+            &#34;offset&#34;: 4227152
+          },
+          {
+            &#34;function&#34;: &#34;DeleteObject&#34;,
+            &#34;offset&#34;: 4227156
+          },
+          {
+            &#34;function&#34;: &#34;CreateBrushIndirect&#34;,
+            &#34;offset&#34;: 4227160
+          },
+          {
+            &#34;function&#34;: &#34;CreateFontIndirectW&#34;,
+            &#34;offset&#34;: 4227164
+          },
+          {
+            &#34;function&#34;: &#34;SetBkMode&#34;,
+            &#34;offset&#34;: 4227168
+          },
+          {
+            &#34;function&#34;: &#34;SetTextColor&#34;,
+            &#34;offset&#34;: 4227172
+          }
+        ],
+        &#34;KERNEL32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;RemoveDirectoryW&#34;,
+            &#34;offset&#34;: 4227180
+          },
+          {
+            &#34;function&#34;: &#34;lstrcmpiA&#34;,
+            &#34;offset&#34;: 4227184
+          },
+          {
+            &#34;function&#34;: &#34;GetTempFileNameW&#34;,
+            &#34;offset&#34;: 4227188
+          },
+          {
+            &#34;function&#34;: &#34;CreateProcessW&#34;,
+            &#34;offset&#34;: 4227192
+          },
+          {
+            &#34;function&#34;: &#34;CreateDirectoryW&#34;,
+            &#34;offset&#34;: 4227196
+          },
+          {
+            &#34;function&#34;: &#34;CreateThread&#34;,
+            &#34;offset&#34;: 4227200
+          },
+          {
+            &#34;function&#34;: &#34;GlobalLock&#34;,
+            &#34;offset&#34;: 4227204
+          },
+          {
+            &#34;function&#34;: &#34;GlobalUnlock&#34;,
+            &#34;offset&#34;: 4227208
+          },
+          {
+            &#34;function&#34;: &#34;GetDiskFreeSpaceW&#34;,
+            &#34;offset&#34;: 4227212
+          },
+          {
+            &#34;function&#34;: &#34;WideCharToMultiByte&#34;,
+            &#34;offset&#34;: 4227216
+          },
+          {
+            &#34;function&#34;: &#34;lstrcpynW&#34;,
+            &#34;offset&#34;: 4227220
+          },
+          {
+            &#34;function&#34;: &#34;lstrlenW&#34;,
+            &#34;offset&#34;: 4227224
+          },
+          {
+            &#34;function&#34;: &#34;SetErrorMode&#34;,
+            &#34;offset&#34;: 4227228
+          },
+          {
+            &#34;function&#34;: &#34;GetVersionExW&#34;,
+            &#34;offset&#34;: 4227232
+          },
+          {
+            &#34;function&#34;: &#34;GetCommandLineW&#34;,
+            &#34;offset&#34;: 4227236
+          },
+          {
+            &#34;function&#34;: &#34;GetTempPathW&#34;,
+            &#34;offset&#34;: 4227240
+          },
+          {
+            &#34;function&#34;: &#34;GetWindowsDirectoryW&#34;,
+            &#34;offset&#34;: 4227244
+          },
+          {
+            &#34;function&#34;: &#34;SetEnvironmentVariableW&#34;,
+            &#34;offset&#34;: 4227248
+          },
+          {
+            &#34;function&#34;: &#34;CopyFileW&#34;,
+            &#34;offset&#34;: 4227252
+          },
+          {
+            &#34;function&#34;: &#34;WriteFile&#34;,
+            &#34;offset&#34;: 4227256
+          },
+          {
+            &#34;function&#34;: &#34;GetCurrentProcess&#34;,
+            &#34;offset&#34;: 4227260
+          },
+          {
+            &#34;function&#34;: &#34;GetModuleFileNameW&#34;,
+            &#34;offset&#34;: 4227264
+          },
+          {
+            &#34;function&#34;: &#34;GetLastError&#34;,
+            &#34;offset&#34;: 4227268
+          },
+          {
+            &#34;function&#34;: &#34;GetFileSize&#34;,
+            &#34;offset&#34;: 4227272
+          },
+          {
+            &#34;function&#34;: &#34;CreateFileW&#34;,
+            &#34;offset&#34;: 4227276
+          },
+          {
+            &#34;function&#34;: &#34;GetTickCount&#34;,
+            &#34;offset&#34;: 4227280
+          },
+          {
+            &#34;function&#34;: &#34;Sleep&#34;,
+            &#34;offset&#34;: 4227284
+          },
+          {
+            &#34;function&#34;: &#34;SetFileAttributesW&#34;,
+            &#34;offset&#34;: 4227288
+          },
+          {
+            &#34;function&#34;: &#34;GetFileAttributesW&#34;,
+            &#34;offset&#34;: 4227292
+          },
+          {
+            &#34;function&#34;: &#34;SetCurrentDirectoryW&#34;,
+            &#34;offset&#34;: 4227296
+          },
+          {
+            &#34;function&#34;: &#34;MoveFileW&#34;,
+            &#34;offset&#34;: 4227300
+          },
+          {
+            &#34;function&#34;: &#34;GetFullPathNameW&#34;,
+            &#34;offset&#34;: 4227304
+          },
+          {
+            &#34;function&#34;: &#34;GetShortPathNameW&#34;,
+            &#34;offset&#34;: 4227308
+          },
+          {
+            &#34;function&#34;: &#34;SearchPathW&#34;,
+            &#34;offset&#34;: 4227312
+          },
+          {
+            &#34;function&#34;: &#34;CompareFileTime&#34;,
+            &#34;offset&#34;: 4227316
+          },
+          {
+            &#34;function&#34;: &#34;SetFileTime&#34;,
+            &#34;offset&#34;: 4227320
+          },
+          {
+            &#34;function&#34;: &#34;CloseHandle&#34;,
+            &#34;offset&#34;: 4227324
+          },
+          {
+            &#34;function&#34;: &#34;lstrcmpiW&#34;,
+            &#34;offset&#34;: 4227328
+          },
+          {
+            &#34;function&#34;: &#34;lstrcmpW&#34;,
+            &#34;offset&#34;: 4227332
+          },
+          {
+            &#34;function&#34;: &#34;ExpandEnvironmentStringsW&#34;,
+            &#34;offset&#34;: 4227336
+          },
+          {
+            &#34;function&#34;: &#34;GlobalFree&#34;,
+            &#34;offset&#34;: 4227340
+          },
+          {
+            &#34;function&#34;: &#34;GlobalAlloc&#34;,
+            &#34;offset&#34;: 4227344
+          },
+          {
+            &#34;function&#34;: &#34;GetModuleHandleW&#34;,
+            &#34;offset&#34;: 4227348
+          },
+          {
+            &#34;function&#34;: &#34;LoadLibraryExW&#34;,
+            &#34;offset&#34;: 4227352
+          },
+          {
+            &#34;function&#34;: &#34;FreeLibrary&#34;,
+            &#34;offset&#34;: 4227356
+          },
+          {
+            &#34;function&#34;: &#34;WritePrivateProfileStringW&#34;,
+            &#34;offset&#34;: 4227360
+          },
+          {
+            &#34;function&#34;: &#34;GetPrivateProfileStringW&#34;,
+            &#34;offset&#34;: 4227364
+          },
+          {
+            &#34;function&#34;: &#34;lstrlenA&#34;,
+            &#34;offset&#34;: 4227368
+          },
+          {
+            &#34;function&#34;: &#34;MultiByteToWideChar&#34;,
+            &#34;offset&#34;: 4227372
+          },
+          {
+            &#34;function&#34;: &#34;ReadFile&#34;,
+            &#34;offset&#34;: 4227376
+          },
+          {
+            &#34;function&#34;: &#34;SetFilePointer&#34;,
+            &#34;offset&#34;: 4227380
+          },
+          {
+            &#34;function&#34;: &#34;FindClose&#34;,
+            &#34;offset&#34;: 4227384
+          },
+          {
+            &#34;function&#34;: &#34;FindNextFileW&#34;,
+            &#34;offset&#34;: 4227388
+          },
+          {
+            &#34;function&#34;: &#34;FindFirstFileW&#34;,
+            &#34;offset&#34;: 4227392
+          },
+          {
+            &#34;function&#34;: &#34;DeleteFileW&#34;,
+            &#34;offset&#34;: 4227396
+          },
+          {
+            &#34;function&#34;: &#34;MulDiv&#34;,
+            &#34;offset&#34;: 4227400
+          },
+          {
+            &#34;function&#34;: &#34;lstrcpyA&#34;,
+            &#34;offset&#34;: 4227404
+          },
+          {
+            &#34;function&#34;: &#34;MoveFileExW&#34;,
+            &#34;offset&#34;: 4227408
+          },
+          {
+            &#34;function&#34;: &#34;lstrcatW&#34;,
+            &#34;offset&#34;: 4227412
+          },
+          {
+            &#34;function&#34;: &#34;GetSystemDirectoryW&#34;,
+            &#34;offset&#34;: 4227416
+          },
+          {
+            &#34;function&#34;: &#34;GetProcAddress&#34;,
+            &#34;offset&#34;: 4227420
+          },
+          {
+            &#34;function&#34;: &#34;GetModuleHandleA&#34;,
+            &#34;offset&#34;: 4227424
+          },
+          {
+            &#34;function&#34;: &#34;GetExitCodeProcess&#34;,
+            &#34;offset&#34;: 4227428
+          },
+          {
+            &#34;function&#34;: &#34;WaitForSingleObject&#34;,
+            &#34;offset&#34;: 4227432
+          },
+          {
+            &#34;function&#34;: &#34;ExitProcess&#34;,
+            &#34;offset&#34;: 4227436
+          }
+        ],
+        &#34;SHELL32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;SHGetPathFromIDListW&#34;,
+            &#34;offset&#34;: 4227444
+          },
+          {
+            &#34;function&#34;: &#34;SHBrowseForFolderW&#34;,
+            &#34;offset&#34;: 4227448
+          },
+          {
+            &#34;function&#34;: &#34;SHGetFileInfoW&#34;,
+            &#34;offset&#34;: 4227452
+          },
+          {
+            &#34;function&#34;: &#34;SHFileOperationW&#34;,
+            &#34;offset&#34;: 4227456
+          },
+          {
+            &#34;function&#34;: &#34;ShellExecuteExW&#34;,
+            &#34;offset&#34;: 4227460
+          }
+        ],
+        &#34;USER32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;MessageBoxIndirectW&#34;,
+            &#34;offset&#34;: 4227468
+          },
+          {
+            &#34;function&#34;: &#34;GetDlgItemTextW&#34;,
+            &#34;offset&#34;: 4227472
+          },
+          {
+            &#34;function&#34;: &#34;SetDlgItemTextW&#34;,
+            &#34;offset&#34;: 4227476
+          },
+          {
+            &#34;function&#34;: &#34;CreatePopupMenu&#34;,
+            &#34;offset&#34;: 4227480
+          },
+          {
+            &#34;function&#34;: &#34;AppendMenuW&#34;,
+            &#34;offset&#34;: 4227484
+          },
+          {
+            &#34;function&#34;: &#34;TrackPopupMenu&#34;,
+            &#34;offset&#34;: 4227488
+          },
+          {
+            &#34;function&#34;: &#34;OpenClipboard&#34;,
+            &#34;offset&#34;: 4227492
+          },
+          {
+            &#34;function&#34;: &#34;EmptyClipboard&#34;,
+            &#34;offset&#34;: 4227496
+          },
+          {
+            &#34;function&#34;: &#34;SetClipboardData&#34;,
+            &#34;offset&#34;: 4227500
+          },
+          {
+            &#34;function&#34;: &#34;CloseClipboard&#34;,
+            &#34;offset&#34;: 4227504
+          },
+          {
+            &#34;function&#34;: &#34;IsWindowVisible&#34;,
+            &#34;offset&#34;: 4227508
+          },
+          {
+            &#34;function&#34;: &#34;CallWindowProcW&#34;,
+            &#34;offset&#34;: 4227512
+          },
+          {
+            &#34;function&#34;: &#34;GetMessagePos&#34;,
+            &#34;offset&#34;: 4227516
+          },
+          {
+            &#34;function&#34;: &#34;CheckDlgButton&#34;,
+            &#34;offset&#34;: 4227520
+          },
+          {
+            &#34;function&#34;: &#34;LoadCursorW&#34;,
+            &#34;offset&#34;: 4227524
+          },
+          {
+            &#34;function&#34;: &#34;SetCursor&#34;,
+            &#34;offset&#34;: 4227528
+          },
+          {
+            &#34;function&#34;: &#34;GetSysColor&#34;,
+            &#34;offset&#34;: 4227532
+          },
+          {
+            &#34;function&#34;: &#34;SetWindowPos&#34;,
+            &#34;offset&#34;: 4227536
+          },
+          {
+            &#34;function&#34;: &#34;GetWindowLongW&#34;,
+            &#34;offset&#34;: 4227540
+          },
+          {
+            &#34;function&#34;: &#34;IsWindowEnabled&#34;,
+            &#34;offset&#34;: 4227544
+          },
+          {
+            &#34;function&#34;: &#34;SetClassLongW&#34;,
+            &#34;offset&#34;: 4227548
+          },
+          {
+            &#34;function&#34;: &#34;GetSystemMenu&#34;,
+            &#34;offset&#34;: 4227552
+          },
+          {
+            &#34;function&#34;: &#34;EnableMenuItem&#34;,
+            &#34;offset&#34;: 4227556
+          },
+          {
+            &#34;function&#34;: &#34;GetWindowRect&#34;,
+            &#34;offset&#34;: 4227560
+          },
+          {
+            &#34;function&#34;: &#34;ScreenToClient&#34;,
+            &#34;offset&#34;: 4227564
+          },
+          {
+            &#34;function&#34;: &#34;EndDialog&#34;,
+            &#34;offset&#34;: 4227568
+          },
+          {
+            &#34;function&#34;: &#34;RegisterClassW&#34;,
+            &#34;offset&#34;: 4227572
+          },
+          {
+            &#34;function&#34;: &#34;SystemParametersInfoW&#34;,
+            &#34;offset&#34;: 4227576
+          },
+          {
+            &#34;function&#34;: &#34;CharPrevW&#34;,
+            &#34;offset&#34;: 4227580
+          },
+          {
+            &#34;function&#34;: &#34;GetClassInfoW&#34;,
+            &#34;offset&#34;: 4227584
+          },
+          {
+            &#34;function&#34;: &#34;DialogBoxParamW&#34;,
+            &#34;offset&#34;: 4227588
+          },
+          {
+            &#34;function&#34;: &#34;CharNextW&#34;,
+            &#34;offset&#34;: 4227592
+          },
+          {
+            &#34;function&#34;: &#34;ExitWindowsEx&#34;,
+            &#34;offset&#34;: 4227596
+          },
+          {
+            &#34;function&#34;: &#34;DestroyWindow&#34;,
+            &#34;offset&#34;: 4227600
+          },
+          {
+            &#34;function&#34;: &#34;CreateDialogParamW&#34;,
+            &#34;offset&#34;: 4227604
+          },
+          {
+            &#34;function&#34;: &#34;SetTimer&#34;,
+            &#34;offset&#34;: 4227608
+          },
+          {
+            &#34;function&#34;: &#34;SetWindowTextW&#34;,
+            &#34;offset&#34;: 4227612
+          },
+          {
+            &#34;function&#34;: &#34;PostQuitMessage&#34;,
+            &#34;offset&#34;: 4227616
+          },
+          {
+            &#34;function&#34;: &#34;SetForegroundWindow&#34;,
+            &#34;offset&#34;: 4227620
+          },
+          {
+            &#34;function&#34;: &#34;ShowWindow&#34;,
+            &#34;offset&#34;: 4227624
+          },
+          {
+            &#34;function&#34;: &#34;wsprintfW&#34;,
+            &#34;offset&#34;: 4227628
+          },
+          {
+            &#34;function&#34;: &#34;SendMessageTimeoutW&#34;,
+            &#34;offset&#34;: 4227632
+          },
+          {
+            &#34;function&#34;: &#34;FindWindowExW&#34;,
+            &#34;offset&#34;: 4227636
+          },
+          {
+            &#34;function&#34;: &#34;IsWindow&#34;,
+            &#34;offset&#34;: 4227640
+          },
+          {
+            &#34;function&#34;: &#34;GetDlgItem&#34;,
+            &#34;offset&#34;: 4227644
+          },
+          {
+            &#34;function&#34;: &#34;SetWindowLongW&#34;,
+            &#34;offset&#34;: 4227648
+          },
+          {
+            &#34;function&#34;: &#34;LoadImageW&#34;,
+            &#34;offset&#34;: 4227652
+          },
+          {
+            &#34;function&#34;: &#34;GetDC&#34;,
+            &#34;offset&#34;: 4227656
+          },
+          {
+            &#34;function&#34;: &#34;ReleaseDC&#34;,
+            &#34;offset&#34;: 4227660
+          },
+          {
+            &#34;function&#34;: &#34;EnableWindow&#34;,
+            &#34;offset&#34;: 4227664
+          },
+          {
+            &#34;function&#34;: &#34;InvalidateRect&#34;,
+            &#34;offset&#34;: 4227668
+          },
+          {
+            &#34;function&#34;: &#34;SendMessageW&#34;,
+            &#34;offset&#34;: 4227672
+          },
+          {
+            &#34;function&#34;: &#34;DefWindowProcW&#34;,
+            &#34;offset&#34;: 4227676
+          },
+          {
+            &#34;function&#34;: &#34;BeginPaint&#34;,
+            &#34;offset&#34;: 4227680
+          },
+          {
+            &#34;function&#34;: &#34;GetClientRect&#34;,
+            &#34;offset&#34;: 4227684
+          },
+          {
+            &#34;function&#34;: &#34;FillRect&#34;,
+            &#34;offset&#34;: 4227688
+          },
+          {
+            &#34;function&#34;: &#34;DrawTextW&#34;,
+            &#34;offset&#34;: 4227692
+          },
+          {
+            &#34;function&#34;: &#34;EndPaint&#34;,
+            &#34;offset&#34;: 4227696
+          },
+          {
+            &#34;function&#34;: &#34;CharNextA&#34;,
+            &#34;offset&#34;: 4227700
+          },
+          {
+            &#34;function&#34;: &#34;wsprintfA&#34;,
+            &#34;offset&#34;: 4227704
+          },
+          {
+            &#34;function&#34;: &#34;DispatchMessageW&#34;,
+            &#34;offset&#34;: 4227708
+          },
+          {
+            &#34;function&#34;: &#34;CreateWindowExW&#34;,
+            &#34;offset&#34;: 4227712
+          },
+          {
+            &#34;function&#34;: &#34;PeekMessageW&#34;,
+            &#34;offset&#34;: 4227716
+          },
+          {
+            &#34;function&#34;: &#34;GetSystemMetrics&#34;,
+            &#34;offset&#34;: 4227720
+          }
+        ],
+        &#34;ole32.dll&#34;: [
+          {
+            &#34;function&#34;: &#34;CoCreateInstance&#34;,
+            &#34;offset&#34;: 4227728
+          },
+          {
+            &#34;function&#34;: &#34;OleUninitialize&#34;,
+            &#34;offset&#34;: 4227732
+          },
+          {
+            &#34;function&#34;: &#34;OleInitialize&#34;,
+            &#34;offset&#34;: 4227736
+          },
+          {
+            &#34;function&#34;: &#34;IIDFromString&#34;,
+            &#34;offset&#34;: 4227740
+          },
+          {
+            &#34;function&#34;: &#34;CoTaskMemFree&#34;,
+            &#34;offset&#34;: 4227744
+          }
+        ]
+      },
+      &#34;relocations&#34;: {
+        &#34;Size&#34;: 0,
+        &#34;VirtualAddress&#34;: 0,
+        &#34;count&#34;: 0,
+        &#34;details&#34;: {}
+      },
+      &#34;resources&#34;: [
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x00`\\x00\\x00\\x00\\x10\\x00\\x00\\x00\\x01\\x00\\x08\\x00\\x00\\x00\\x00\\x00\\x02\\x06\\x00\\x004\\x0b\\x00\\x004\\x0b\\x00\\x00\\x0f\\x00\\x00\\x00\\x0f\\x00\\x00\\x00\\xff\\x00\\xff\\x00\\x80\\x80\\x00\\x00!\\xa5&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_BITMAP&#34;,
+          &#34;offset&#34;: 422816,
+          &#34;size&#34;: 1638,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x02\\x00\\x00\\x01\\x00 \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_ICON_1&#34;,
+          &#34;offset&#34;: 424456,
+          &#34;size&#34;: 270376,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x000\\x00\\x00\\x00`\\x00\\x00\\x00\\x01\\x00 \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_ICON_2&#34;,
+          &#34;offset&#34;: 694832,
+          &#34;size&#34;: 9640,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x00 \\x00\\x00\\x00@\\x00\\x00\\x00\\x01\\x00 \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x0b\\x0b\\n\\r10/!UV&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_ICON_3&#34;,
+          &#34;offset&#34;: 704472,
+          &#34;size&#34;: 4264,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x00\\x18\\x00\\x00\\x000\\x00\\x00\\x00\\x01\\x00 \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00)#\\x1e/k`VSfZ&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_ICON_4&#34;,
+          &#34;offset&#34;: 708736,
+          &#34;size&#34;: 2440,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;(\\x00\\x00\\x00\\x10\\x00\\x00\\x00 \\x00\\x00\\x00\\x01\\x00 \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00]J8c\\x9b\\x7ff\\x8dyY&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_ICON_5&#34;,
+          &#34;offset&#34;: 711176,
+          &#34;size&#34;: 1128,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x04\\xc0@\\x03\\x00\\x00\\x00\\x00\\x00,\\x01\\x8c\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_1&#34;,
+          &#34;offset&#34;: 712304,
+          &#34;size&#34;: 180,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x04\\x00@\\x07\\x00\\x00\\x00\\x00\\x00,\\x01\\x8c\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_2&#34;,
+          &#34;offset&#34;: 712488,
+          &#34;size&#34;: 288,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x04\\x00@\\x08\\x00\\x00\\x00\\x00\\x00,\\x01\\x8c\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_3&#34;,
+          &#34;offset&#34;: 712776,
+          &#34;size&#34;: 344,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x08\\xca\\x80\\x0e\\x00\\x00\\x00\\x00\\x00K\\x01\\xde\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_4&#34;,
+          &#34;offset&#34;: 713120,
+          &#34;size&#34;: 514,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x04\\x00@\\x04\\x00\\x00\\x00\\x00\\x00,\\x01\\x8c\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_5&#34;,
+          &#34;offset&#34;: 713640,
+          &#34;size&#34;: 248,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00H\\x04\\x00@\\x03\\x00\\x00\\x00\\x00\\x00,\\x01\\x8c\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_6&#34;,
+          &#34;offset&#34;: 713888,
+          &#34;size&#34;: 160,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x01\\x00\\xff\\xff\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xc8\\x08\\x00\\x80\\x03\\x00\\x00\\x00\\x00\\x00\\xa7\\x00+\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x08\\x00\\x00\\x00\\x00\\x01M\\x00S\\x00 \\x00S\\x00h\\x00e\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_DIALOG_7&#34;,
+          &#34;offset&#34;: 714048,
+          &#34;size&#34;: 238,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;\\x00\\x00\\x01\\x00\\x05\\x00\\x00\\x00\\x00\\x00\\x01\\x00 \\x00( \\x04\\x00\\x01\\x0000\\x00\\x00\\x01\\x00 \\x00\\xa8%\\x00\\x00\\x02\\x00  \\x00\\x00\\x01\\x00 \\x00\\xa8\\x10\\x00\\x00\\x03\\x00\\x18\\x18&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_GROUP_ICON&#34;,
+          &#34;offset&#34;: 714288,
+          &#34;size&#34;: 76,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;4\\x044\\x00\\x00\\x00V\\x00S\\x00_\\x00V\\x00E\\x00R\\x00S\\x00I\\x00O\\x00N\\x00_\\x00I\\x00N\\x00F\\x00O\\x00\\x00\\x00\\x00\\x00\\xbd\\x04\\xef\\xfe\\x00\\x00\\x00\\x00\\x06\\x00&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_VERSION&#34;,
+          &#34;offset&#34;: 714368,
+          &#34;size&#34;: 1076,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        },
+        {
+          &#34;data&#34;: &#34;b&#39;&lt;?xml version=\&#34;1.0\&#34; encoding=\&#34;UTF-8\&#34; standalone=\&#34;y&#39;&#34;,
+          &#34;executable&#34;: false,
+          &#34;language&#34;: &#34;LANG_ENGLISH&#34;,
+          &#34;name&#34;: &#34;RT_MANIFEST&#34;,
+          &#34;offset&#34;: 715448,
+          &#34;size&#34;: 1260,
+          &#34;sublanguage&#34;: &#34;SUBLANG_ENGLISH_US&#34;
+        }
+      ],
+      &#34;sign&#34;: {},
+      &#34;tls&#34;: {
+        &#34;AddressOfCallBacks&#34;: 65535,
+        &#34;AddressOfIndex&#34;: 4,
+        &#34;Characteristics&#34;: 0,
+        &#34;EndAddressOfRawData&#34;: 3,
+        &#34;SizeOfZeroFill&#34;: 184,
+        &#34;StartAddressOfRawData&#34;: 9460301
+      }
+    },
+    &#34;heuristics&#34;: {
+      &#34;hits&#34;: [
+        {
+          &#34;data&#34;: {
+            &#34;overlay_fraction&#34;: 0.9965928334085798,
+            &#34;overlay_size&#34;: 96295352
+          },
+          &#34;id&#34;: &#34;overlay&#34;,
+          &#34;message&#34;: &#34;File contains an overlay (96295352 bytes).&#34;,
+          &#34;score&#34;: 8,
+          &#34;severity&#34;: &#34;medium&#34;
+        },
+        {
+          &#34;data&#34;: {
+            &#34;matched&#34;: [
+              &#34;GetTickCount&#34;,
+              &#34;Sleep&#34;
+            ]
+          },
+          &#34;id&#34;: &#34;imports_evasion&#34;,
+          &#34;message&#34;: &#34;Evasion / anti-analysis primitives: GetTickCount, Sleep.&#34;,
+          &#34;score&#34;: 10,
+          &#34;severity&#34;: &#34;medium&#34;
+        }
+      ],
+      &#34;metrics&#34;: {
+        &#34;has_authenticode&#34;: true,
+        &#34;high_entropy_sections&#34;: [],
+        &#34;import_behavior&#34;: [
+          {
+            &#34;description&#34;: &#34;Evasion / anti-analysis primitives&#34;,
+            &#34;id&#34;: &#34;evasion&#34;,
+            &#34;matched&#34;: [
+              &#34;GetTickCount&#34;,
+              &#34;Sleep&#34;
+            ]
+          }
+        ],
+        &#34;ordinal_import_ratio&#34;: 0.006,
+        &#34;overlay_fraction&#34;: 0.9966,
+        &#34;overlay_size&#34;: 96295352,
+        &#34;packerish_sections&#34;: [],
+        &#34;rwx_sections&#34;: [],
+        &#34;section_count&#34;: 5,
+        &#34;string_base64ish_count&#34;: 0,
+        &#34;string_ips&#34;: [],
+        &#34;string_urls&#34;: [],
+        &#34;tls_callbacks&#34;: false
+      }
+    },
+    &#34;imports&#34;: {
+      &#34;ADVAPI32.dll&#34;: [
+        &#34;RegEnumValueW&#34;,
+        &#34;RegEnumKeyW&#34;,
+        &#34;RegQueryValueExW&#34;,
+        &#34;RegSetValueExW&#34;,
+        &#34;RegCloseKey&#34;,
+        &#34;RegDeleteValueW&#34;,
+        &#34;RegDeleteKeyW&#34;,
+        &#34;AdjustTokenPrivileges&#34;,
+        &#34;LookupPrivilegeValueW&#34;,
+        &#34;OpenProcessToken&#34;,
+        &#34;RegOpenKeyExW&#34;,
+        &#34;RegCreateKeyExW&#34;
+      ],
+      &#34;COMCTL32.dll&#34;: [
+        &#34;ImageList_Destroy&#34;,
+        &#34;ordinal:17&#34;,
+        &#34;ImageList_AddMasked&#34;,
+        &#34;ImageList_Create&#34;
+      ],
+      &#34;GDI32.dll&#34;: [
+        &#34;GetDeviceCaps&#34;,
+        &#34;SetBkColor&#34;,
+        &#34;SelectObject&#34;,
+        &#34;DeleteObject&#34;,
+        &#34;CreateBrushIndirect&#34;,
+        &#34;CreateFontIndirectW&#34;,
+        &#34;SetBkMode&#34;,
+        &#34;SetTextColor&#34;
+      ],
+      &#34;KERNEL32.dll&#34;: [
+        &#34;RemoveDirectoryW&#34;,
+        &#34;lstrcmpiA&#34;,
+        &#34;GetTempFileNameW&#34;,
+        &#34;CreateProcessW&#34;,
+        &#34;CreateDirectoryW&#34;,
+        &#34;CreateThread&#34;,
+        &#34;GlobalLock&#34;,
+        &#34;GlobalUnlock&#34;,
+        &#34;GetDiskFreeSpaceW&#34;,
+        &#34;WideCharToMultiByte&#34;,
+        &#34;lstrcpynW&#34;,
+        &#34;lstrlenW&#34;,
+        &#34;SetErrorMode&#34;,
+        &#34;GetVersionExW&#34;,
+        &#34;GetCommandLineW&#34;,
+        &#34;GetTempPathW&#34;,
+        &#34;GetWindowsDirectoryW&#34;,
+        &#34;SetEnvironmentVariableW&#34;,
+        &#34;CopyFileW&#34;,
+        &#34;WriteFile&#34;,
+        &#34;GetCurrentProcess&#34;,
+        &#34;GetModuleFileNameW&#34;,
+        &#34;GetLastError&#34;,
+        &#34;GetFileSize&#34;,
+        &#34;CreateFileW&#34;,
+        &#34;GetTickCount&#34;,
+        &#34;Sleep&#34;,
+        &#34;SetFileAttributesW&#34;,
+        &#34;GetFileAttributesW&#34;,
+        &#34;SetCurrentDirectoryW&#34;,
+        &#34;MoveFileW&#34;,
+        &#34;GetFullPathNameW&#34;,
+        &#34;GetShortPathNameW&#34;,
+        &#34;SearchPathW&#34;,
+        &#34;CompareFileTime&#34;,
+        &#34;SetFileTime&#34;,
+        &#34;CloseHandle&#34;,
+        &#34;lstrcmpiW&#34;,
+        &#34;lstrcmpW&#34;,
+        &#34;ExpandEnvironmentStringsW&#34;,
+        &#34;GlobalFree&#34;,
+        &#34;GlobalAlloc&#34;,
+        &#34;GetModuleHandleW&#34;,
+        &#34;LoadLibraryExW&#34;,
+        &#34;FreeLibrary&#34;,
+        &#34;WritePrivateProfileStringW&#34;,
+        &#34;GetPrivateProfileStringW&#34;,
+        &#34;lstrlenA&#34;,
+        &#34;MultiByteToWideChar&#34;,
+        &#34;ReadFile&#34;,
+        &#34;SetFilePointer&#34;,
+        &#34;FindClose&#34;,
+        &#34;FindNextFileW&#34;,
+        &#34;FindFirstFileW&#34;,
+        &#34;DeleteFileW&#34;,
+        &#34;MulDiv&#34;,
+        &#34;lstrcpyA&#34;,
+        &#34;MoveFileExW&#34;,
+        &#34;lstrcatW&#34;,
+        &#34;GetSystemDirectoryW&#34;,
+        &#34;GetProcAddress&#34;,
+        &#34;GetModuleHandleA&#34;,
+        &#34;GetExitCodeProcess&#34;,
+        &#34;WaitForSingleObject&#34;,
+        &#34;ExitProcess&#34;
+      ],
+      &#34;SHELL32.dll&#34;: [
+        &#34;SHGetPathFromIDListW&#34;,
+        &#34;SHBrowseForFolderW&#34;,
+        &#34;SHGetFileInfoW&#34;,
+        &#34;SHFileOperationW&#34;,
+        &#34;ShellExecuteExW&#34;
+      ],
+      &#34;USER32.dll&#34;: [
+        &#34;MessageBoxIndirectW&#34;,
+        &#34;GetDlgItemTextW&#34;,
+        &#34;SetDlgItemTextW&#34;,
+        &#34;CreatePopupMenu&#34;,
+        &#34;AppendMenuW&#34;,
+        &#34;TrackPopupMenu&#34;,
+        &#34;OpenClipboard&#34;,
+        &#34;EmptyClipboard&#34;,
+        &#34;SetClipboardData&#34;,
+        &#34;CloseClipboard&#34;,
+        &#34;IsWindowVisible&#34;,
+        &#34;CallWindowProcW&#34;,
+        &#34;GetMessagePos&#34;,
+        &#34;CheckDlgButton&#34;,
+        &#34;LoadCursorW&#34;,
+        &#34;SetCursor&#34;,
+        &#34;GetSysColor&#34;,
+        &#34;SetWindowPos&#34;,
+        &#34;GetWindowLongW&#34;,
+        &#34;IsWindowEnabled&#34;,
+        &#34;SetClassLongW&#34;,
+        &#34;GetSystemMenu&#34;,
+        &#34;EnableMenuItem&#34;,
+        &#34;GetWindowRect&#34;,
+        &#34;ScreenToClient&#34;,
+        &#34;EndDialog&#34;,
+        &#34;RegisterClassW&#34;,
+        &#34;SystemParametersInfoW&#34;,
+        &#34;CharPrevW&#34;,
+        &#34;GetClassInfoW&#34;,
+        &#34;DialogBoxParamW&#34;,
+        &#34;CharNextW&#34;,
+        &#34;ExitWindowsEx&#34;,
+        &#34;DestroyWindow&#34;,
+        &#34;CreateDialogParamW&#34;,
+        &#34;SetTimer&#34;,
+        &#34;SetWindowTextW&#34;,
+        &#34;PostQuitMessage&#34;,
+        &#34;SetForegroundWindow&#34;,
+        &#34;ShowWindow&#34;,
+        &#34;wsprintfW&#34;,
+        &#34;SendMessageTimeoutW&#34;,
+        &#34;FindWindowExW&#34;,
+        &#34;IsWindow&#34;,
+        &#34;GetDlgItem&#34;,
+        &#34;SetWindowLongW&#34;,
+        &#34;LoadImageW&#34;,
+        &#34;GetDC&#34;,
+        &#34;ReleaseDC&#34;,
+        &#34;EnableWindow&#34;,
+        &#34;InvalidateRect&#34;,
+        &#34;SendMessageW&#34;,
+        &#34;DefWindowProcW&#34;,
+        &#34;BeginPaint&#34;,
+        &#34;GetClientRect&#34;,
+        &#34;FillRect&#34;,
+        &#34;DrawTextW&#34;,
+        &#34;EndPaint&#34;,
+        &#34;CharNextA&#34;,
+        &#34;wsprintfA&#34;,
+        &#34;DispatchMessageW&#34;,
+        &#34;CreateWindowExW&#34;,
+        &#34;PeekMessageW&#34;,
+        &#34;GetSystemMetrics&#34;
+      ],
+      &#34;ole32.dll&#34;: [
+        &#34;CoCreateInstance&#34;,
+        &#34;OleUninitialize&#34;,
+        &#34;OleInitialize&#34;,
+        &#34;IIDFromString&#34;,
+        &#34;CoTaskMemFree&#34;
+      ]
+    },
+    &#34;metadata&#34;: {
+      &#34;Comments&#34;: &#34;It&#39;s a great product with a great story to tell. I&#39;m pumped!&#34;,
+      &#34;CompanyName&#34;: &#34;Wireshark development team&#34;,
+      &#34;FileDescription&#34;: &#34;Wireshark installer for Windows on x64&#34;,
+      &#34;FileVersion&#34;: &#34;4.6.2.0&#34;,
+      &#34;Language&#34;: &#34;English&#34;,
+      &#34;LegalCopyright&#34;: &#34;© Gerald Combs and many others&#34;,
+      &#34;LegalTrademarks&#34;: &#34;Wireshark and the &#39;fin&#39; logo are registered trademarks of the Wireshark Foundation&#34;,
+      &#34;ProductName&#34;: &#34;Wireshark&#34;,
+      &#34;ProductVersion&#34;: &#34;4.6.2.0&#34;
+    },
+    &#34;plugins&#34;: {
+      &#34;example_metadata&#34;: {
+        &#34;note&#34;: &#34;This is a built-in example plugin. Disable it with --enable-plugin to explicitly choose plugins.&#34;,
+        &#34;path_basename&#34;: &#34;Wireshark-4.6.2-x64.exe&#34;
+      }
+    },
+    &#34;plugins_run&#34;: [
+      {
+        &#34;name&#34;: &#34;example_metadata&#34;,
+        &#34;status&#34;: &#34;ok&#34;
+      }
+    ],
+    &#34;sections&#34;: {
+      &#34;count&#34;: 5,
+      &#34;details&#34;: [
+        {
+          &#34;characteristics&#34;: 1610612768,
+          &#34;data&#34;: &#34;b&#39;U\\x8b\\xec\\x83\\xec\\\\\\x83}\\x0c\\x0ft+\\x83}\\x0cF\\x8b&#34;,
+          &#34;entropy&#34;: 6.454334667833774,
+          &#34;executable&#34;: true,
+          &#34;hash&#34;: {
+            &#34;md5&#34;: &#34;afb6c5993570f82e85ec446bbb886505&#34;,
+            &#34;sha1&#34;: &#34;3d96eacb962ab3f739212dac5bffbc1b0ac88889&#34;,
+            &#34;sha256&#34;: &#34;89bbbfc4d2f459cc1a27370026ac5737eb822174462d5d5577d01e23e9065cc0&#34;
+          },
+          &#34;section_name&#34;: &#34;.text&#34;,
+          &#34;size_of_raw_data&#34;: 26624,
+          &#34;virtual_address&#34;: 4096,
+          &#34;virtual_size&#34;: 26385
+        },
+        {
+          &#34;characteristics&#34;: 1073741888,
+          &#34;data&#34;: &#34;b&#39;D\\x88\\x00\\x00T\\x88\\x00\\x00b\\x88\\x00\\x00v\\x88\\x00&#34;,
+          &#34;entropy&#34;: 5.099695241249463,
+          &#34;executable&#34;: false,
+          &#34;hash&#34;: {
+            &#34;md5&#34;: &#34;e913094d8cceaca6b405bbbb52936387&#34;,
+            &#34;sha1&#34;: &#34;20df51227f19cb63323b43e74e506b2d2a09dce8&#34;,
+            &#34;sha256&#34;: &#34;512cb9ab76c260c6f4f8bb183a3e121f54906dcb42a74cded744aa6f6a330a19&#34;
+          },
+          &#34;section_name&#34;: &#34;.rdata&#34;,
+          &#34;size_of_raw_data&#34;: 5120,
+          &#34;virtual_address&#34;: 32768,
+          &#34;virtual_size&#34;: 4952
+        },
+        {
+          &#34;characteristics&#34;: 3221225536,
+          &#34;data&#34;: &#34;b&#39;\\xe0\\x9aB\\x00\\x89\\x13@\\x00\\x8ai@\\x00l=@\\x00\\n\\x0&#34;,
+          &#34;entropy&#34;: 4.12304901988063,
+          &#34;executable&#34;: false,
+          &#34;hash&#34;: {
+            &#34;md5&#34;: &#34;9d011beba2fe64a93f62fbb227cc9c35&#34;,
+            &#34;sha1&#34;: &#34;b6c4c61822b7f6abcb36cbd339f9cca5a4f4d452&#34;,
+            &#34;sha256&#34;: &#34;bdc36db376855e354e892a994ecdad27b11262eb19e548501a68049b0692f3f8&#34;
+          },
+          &#34;section_name&#34;: &#34;.data&#34;,
+          &#34;size_of_raw_data&#34;: 1536,
+          &#34;virtual_address&#34;: 40960,
+          &#34;virtual_size&#34;: 129912
+        },
+        {
+          &#34;characteristics&#34;: 3221225600,
+          &#34;data&#34;: &#34;b&#39;&#39;&#34;,
+          &#34;entropy&#34;: 0.0,
+          &#34;executable&#34;: false,
+          &#34;hash&#34;: {
+            &#34;md5&#34;: &#34;d41d8cd98f00b204e9800998ecf8427e&#34;,
+            &#34;sha1&#34;: &#34;da39a3ee5e6b4b0d3255bfef95601890afd80709&#34;,
+            &#34;sha256&#34;: &#34;e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855&#34;
+          },
+          &#34;section_name&#34;: &#34;.ndata&#34;,
+          &#34;size_of_raw_data&#34;: 0,
+          &#34;virtual_address&#34;: 172032,
+          &#34;virtual_size&#34;: 249856
+        },
+        {
+          &#34;characteristics&#34;: 1073741888,
+          &#34;data&#34;: &#34;b&#39;\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00&#34;,
+          &#34;entropy&#34;: 5.094366060294952,
+          &#34;executable&#34;: false,
+          &#34;hash&#34;: {
+            &#34;md5&#34;: &#34;39b9dd4bea436999012177bb43b5d7ad&#34;,
+            &#34;sha1&#34;: &#34;07cd5e9b2fb58c982134d5d1c51d97458cf90510&#34;,
+            &#34;sha256&#34;: &#34;6a811ddbeebfbf2d932d87c9d95b7f9568be2afcd64f81c6e12b5e01a6c25c0f&#34;
+          },
+          &#34;section_name&#34;: &#34;.rsrc&#34;,
+          &#34;size_of_raw_data&#34;: 294912,
+          &#34;virtual_address&#34;: 421888,
+          &#34;virtual_size&#34;: 294824
+        }
+      ]
+    },
+    &#34;strings&#34;: {
+      &#34;count&#34;: 4122126,
+      &#34;samples&#34;: [
+        &#34;L!This program cannot be run in DOS mode.&#34;,
+        &#34;1 PNPNPN*_&#34;,
+        &#34;PNPOJPN*_&#34;,
+        &#34;PNҽs~PN.VHPNRichPN&#34;,
+        &#34;.text&#34;,
+        &#34;`.rdata&#34;,
+        &#34;@.data&#34;,
+        &#34;.ndata&#34;,
+        &#34;.rsrc&#34;,
+        &#34;SV5pB&#34;,
+        &#34;EWPu&#34;,
+        &#34;ȍEPM&#34;,
+        &#34;PEPu&#34;,
+        &#34;w~Xtev4&#34;,
+        &#34;Pjh`B&#34;,
+        &#34;ӍEPu&#34;,
+        &#34;_^3[&#34;,
+        &#34;3;5B&#34;,
+        &#34;t\tOt &#34;,
+        &#34;r_^[&#34;,
+        &#34;UQQU&#34;,
+        &#34;WMMF&#34;,
+        &#34;u(@t&#34;,
+        &#34;r3_^[&#34;,
+        &#34;V3 s495B&#34;,
+        &#34;3Gzt&#34;,
+        &#34;EE39&#34;,
+        &#34;tK;sE5B&#34;,
+        &#34;N#ȋM;u&#34;,
+        &#34;;r;t&#34;,
+        &#34;} rE_^[&#34;,
+        &#34;tUPu&#34;,
+        &#34;H΋+|$&#34;,
+        &#34;Y}MԋU̾&#34;,
+        &#34;$h,@&#34;,
+        &#34;PHSP&#34;,
+        &#34;YUMЉ&#34;,
+        &#34;9]܍B&#34;,
+        &#34;E؍4B&#34;,
+        &#34;#M܋DЉ&#34;,
+        &#34;;t\tuQ֋EЋ&#34;,
+        &#34;;taj\\VI&#34;,
+        &#34;;t(E&#34;,
+        &#34;Ef&gt;FFf;u9]t-ju&#34;,
+        &#34;;v&#39;f9&#34;,
+        &#34;PWeJ&#34;,
+        &#34;&gt;j10&#34;,
+        &#34;|1WFR&#34;,
+        &#34;Eur9]&#34;,
+        &#34;uOVh@&#34;,
+        &#34;WV~N&#34;,
+        &#34;Wjuj&gt;&#34;,
+        &#34;SSuu&#34;,
+        &#34;EPESPu&#34;,
+        &#34;S4j1&#34;,
+        &#34;uPkD&#34;,
+        &#34;YEYj&#34;,
+        &#34;uĉUȉE&#34;,
+        &#34;PE*M&#34;,
+        &#34;pPWL&#34;,
+        &#34;9]PVu&#34;,
+        &#34;3FVm&#34;,
+        &#34;Y;YUu&#34;,
+        &#34;YUYȋE܃&#34;,
+        &#34;$x-@&#34;,
+        &#34;;tSƙC&#34;,
+        &#34;;t;t3F&#34;,
+        &#34;PVWU&#34;,
+        &#34;E؋5X@&#34;,
+        &#34;;tDH;&#34;,
+        &#34;6;u;&#34;,
+        &#34;9]t%;&#34;,
+        &#34;YUYE&#34;,
+        &#34;YUYM&#34;,
+        &#34;URQSu&#34;,
+        &#34;@ECu&#34;,
+        &#34;Q#Pu&#34;,
+        &#34;uOSg&#34;,
+        &#34;YUYVP&#34;,
+        &#34;YUVjP&#34;,
+        &#34;Et\tj&#34;,
+        &#34;EԉEEPu&#34;,
+        &#34;EPuu&#34;,
+        &#34;#5`B&#34;,
+        &#34;Vuhr&#34;,
+        &#34;YjHjZVU&#34;,
+        &#34;Vuأ@&#34;,
+        &#34;EYUuԊȀ&#34;,
+        &#34;9]YYUPVu&#34;,
+        &#34;jExE|E܉Ef&#34;,
+        &#34;]#ƉEf&#34;,
+        &#34;#ǉEtPT=&#34;,
+        &#34;9]t!VK&#34;,
+        &#34;MEQPj&#34;,
+        &#34;EVSuUt&lt;EPEPh&#34;,
+        &#34;Ut%EMt&#34;,
+        &#34;E܋Mt&#34;,
+        &#34;9]Et&#34;,
+        &#34;t{uu&#34;,
+        &#34;;t99]؉]t&#34;,
+        &#34;uׅt-E&#34;,
+        &#34;uEEȋ&#34;,
+        &#34;Ph̄@&#34;,
+        &#34;Sh܄@&#34;,
+        &#34;URh@&#34;,
+        &#34;PQP;Eu&#34;,
+        &#34;Q$;t&#34;,
+        &#34;PQ4Mf9&#34;,
+        &#34;QPRDE&#34;,
+        &#34;PQ,E&#34;,
+        &#34;Sj\t4&#34;,
+        &#34;EVEE&#34;,
+        &#34;Wf\\F&#34;,
+        &#34;fMPSu}EfM3&#34;,
+        &#34;jSVC&#34;,
+        &#34;33;t&#34;,
+        &#34;9]t\tj&#34;,
+        &#34;9]t\tj\&#34;\t&#34;,
+        &#34;PSWV&#34;,
+        &#34;j݉E\t&#34;,
+        &#34;WPuV&#34;,
+        &#34;9]uu+j&#34;,
+        &#34;j3R\t&#34;,
+        &#34;j\&#34;8\t&#34;,
+        &#34;MQPV\t&#34;,
+        &#34;PWuSuu&#34;,
+        &#34;WQSPV&#34;,
+        &#34;3Au.}&#34;,
+        &#34;EEt739]W&#34;,
+        &#34;;YUf&#34;,
+        &#34;QWPV&#34;,
+        &#34;SSSM&#34;,
+        &#34;SQWPV&#34;,
+        &#34;uuPq;&#34;,
+        &#34;P(E3Ƀ8E&#34;,
+        &#34;U@?8u+j!-&#34;,
+        &#34;]XPE&#34;,
+        &#34;ESPj&#34;,
+        &#34;X+EPE&#34;,
+        &#34;9]܉ME&#34;,
+        &#34;Sօuh}M&#34;,
+        &#34;EtYMGj&#34;,
+        &#34;Sօt-9]u&#34;,
+        &#34;Pu&amp;:&#34;,
+        &#34;t}E9]u1f}&#34;,
+        &#34;t;f}&#34;,
+        &#34;t4MUEf;f&#34;,
+        &#34;QEtRE;E&#34;,
+        &#34;f9Et&#34;,
+        &#34;MUEf&#34;,
+        &#34;ME;f&#34;,
+        &#34;A f9&#34;,
+        &#34;YUuSPWb=&#34;,
+        &#34;PPWD&#34;,
+        &#34;E9]؉E&#34;,
+        &#34;Pj@E֋;tjSl&#34;,
+        &#34;uj@֋;ut4uVSu\t&#34;,
+        &#34;VPM_7&#34;,
+        &#34;MSSu&#34;,
+        &#34;j;^}&#34;,
+        &#34;Y;=B&#34;,
+        &#34;+ȉMt&#34;,
+        &#34;E؋Mԉ&#34;,
+        &#34;09]t\&#34;9]t&#34;,
+        &#34;P_SS&#34;,
+        &#34;S9]t&#34;,
+        &#34;E+tKH&#34;,
+        &#34;YUY]&#34;,
+        &#34;;t7MQP&#34;,
+        &#34;PSu܍EPօ|&#34;,
+        &#34;S#Qj&#34;,
+        &#34;3_^[&#34;,
+        &#34;^Vt$&#34;,
+        &#34;Pj\&#34;PT@&#34;,
+        &#34;t#SSSESP]PSu&#34;,
+        &#34;&#39;uNu&#34;,
+        &#34;Putu&#34;,
+        &#34;PWuӅtu&#34;,
+        &#34;PEQP&#34;,
+        &#34;PjdQ&#34;,
+        &#34;V39u&#34;,
+        &#34;vX95hB&#34;,
+        &#34;tGPEh@&#34;,
+        &#34;EPV&amp;&#34;,
+        &#34;#Vh/@&#34;,
+        &#34;Vjo5`B&#34;,
+        &#34;SVW3}}}&#34;,
+        &#34;VWlB&#34;,
+        &#34;SV`0&#34;,
+        &#34;ESP/&#34;,
+        &#34;Eةu|}ﾭus}Instuj}softua}NulluX\tE&#34;,
+        &#34;uIEp;v&#34;,
+        &#34;WSu.9&#34;,
+        &#34;9]t*5A&#34;,
+        &#34;Y:tB&#34;,
+        &#34;+MVSD&#34;,
+        &#34;j@F&lt;&#34;,
+        &#34;3_^[&#34;,
+        &#34;SV3;|&#34;,
+        &#34;u]9u&#34;
+      ]
+    },
+    &#34;suspicious_apis&#34;: [
+      &#34;CloseHandle&#34;,
+      &#34;CopyFileW&#34;,
+      &#34;CreateDirectoryW&#34;,
+      &#34;CreateFileW&#34;,
+      &#34;CreateProcessW&#34;,
+      &#34;CreateThread&#34;,
+      &#34;DeleteFileW&#34;,
+      &#34;ExitProcess&#34;,
+      &#34;FindFirstFileW&#34;,
+      &#34;FindNextFileW&#34;,
+      &#34;FindWindowExW&#34;,
+      &#34;GetCommandLineW&#34;,
+      &#34;GetCurrentProcess&#34;,
+      &#34;GetFileAttributesW&#34;,
+      &#34;GetFileSize&#34;,
+      &#34;GetModuleFileNameW&#34;,
+      &#34;GetModuleHandleA&#34;,
+      &#34;GetModuleHandleW&#34;,
+      &#34;GetProcAddress&#34;,
+      &#34;GetSystemDirectoryW&#34;,
+      &#34;GetTempFileNameW&#34;,
+      &#34;GetTempPathW&#34;,
+      &#34;GetTickCount&#34;,
+      &#34;GetVersionExW&#34;,
+      &#34;GetWindowsDirectoryW&#34;,
+      &#34;LoadLibraryExW&#34;,
+      &#34;MessageBoxIndirectW&#34;,
+      &#34;OpenProcessToken&#34;,
+      &#34;ReadFile&#34;,
+      &#34;RegCloseKey&#34;,
+      &#34;RegCreateKeyExW&#34;,
+      &#34;RegDeleteKeyW&#34;,
+      &#34;RegDeleteValueW&#34;,
+      &#34;RegEnumKeyW&#34;,
+      &#34;RegOpenKeyExW&#34;,
+      &#34;RemoveDirectoryW&#34;,
+      &#34;SetFilePointer&#34;,
+      &#34;ShellExecuteExW&#34;,
+      &#34;Sleep&#34;,
+      &#34;WaitForSingleObject&#34;,
+      &#34;WriteFile&#34;,
+      &#34;lstrcmpW&#34;,
+      &#34;lstrcmpiA&#34;,
+      &#34;lstrcmpiW&#34;
+    ],
+    &#34;yara&#34;: [
+      {
+        &#34;crypto_signatures.yar&#34;: &#34;CRC32_poly_Constant&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;Xor&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;escalate_priv&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;screenshot&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;win_registry&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;win_token&#34;
+      },
+      {
+        &#34;antidebug_antivm.yar&#34;: &#34;win_files_operation&#34;
+      },
+      {
+        &#34;packer_compiler_signatures.yar&#34;: &#34;IsPE32&#34;
+      },
+      {
+        &#34;packer_compiler_signatures.yar&#34;: &#34;IsWindowsGUI&#34;
+      },
+      {
+        &#34;packer_compiler_signatures.yar&#34;: &#34;IsPacked&#34;
+      },
+      {
+        &#34;packer_compiler_signatures.yar&#34;: &#34;HasOverlay&#34;
+      },
+      {
+        &#34;packer_compiler_signatures.yar&#34;: &#34;HasRichSignature&#34;
+      }
+    ]
+  },
+  &#34;indicators&#34;: [
+    {
+      &#34;id&#34;: &#34;suspicious_apis&#34;,
+      &#34;message&#34;: &#34;Found 44 suspicious or high-signal API imports.&#34;,
+      &#34;severity&#34;: &#34;medium&#34;
+    },
+    {
+      &#34;id&#34;: &#34;many_strings&#34;,
+      &#34;message&#34;: &#34;Large number of printable strings; could indicate embedded config or packed content.&#34;,
+      &#34;severity&#34;: &#34;low&#34;
+    },
+    {
+      &#34;id&#34;: &#34;yara_hits&#34;,
+      &#34;message&#34;: &#34;YARA matched 12 rule(s).&#34;,
+      &#34;severity&#34;: &#34;high&#34;
+    },
+    {
+      &#34;id&#34;: &#34;overlay&#34;,
+      &#34;message&#34;: &#34;File contains an overlay (96295352 bytes).&#34;,
+      &#34;score&#34;: 8,
+      &#34;severity&#34;: &#34;medium&#34;
+    },
+    {
+      &#34;id&#34;: &#34;imports_evasion&#34;,
+      &#34;message&#34;: &#34;Evasion / anti-analysis primitives: GetTickCount, Sleep.&#34;,
+      &#34;score&#34;: 10,
+      &#34;severity&#34;: &#34;medium&#34;
+    }
+  ],
+  &#34;pe&#34;: {
+    &#34;entrypoint_rva&#34;: 13983,
+    &#34;imagebase&#34;: 4194304,
+    &#34;imphash&#34;: &#34;46ce5c12b293febbeb513b196aa7f843&#34;,
+    &#34;is_dll&#34;: false,
+    &#34;machine&#34;: &#34;0x14c&#34;,
+    &#34;subsystem&#34;: 2,
+    &#34;timestamp_utc&#34;: &#34;2025-03-08 23:05:20&#34;
+  },
+  &#34;score&#34;: {
+    &#34;breakdown&#34;: [
+      {
+        &#34;id&#34;: &#34;yara&#34;,
+        &#34;message&#34;: &#34;YARA matched 12 rule(s).&#34;,
+        &#34;points&#34;: 40
+      },
+      {
+        &#34;id&#34;: &#34;suspicious_apis&#34;,
+        &#34;message&#34;: &#34;High-signal API imports (44).&#34;,
+        &#34;points&#34;: 25
+      },
+      {
+        &#34;id&#34;: &#34;imports_evasion&#34;,
+        &#34;message&#34;: &#34;Evasion / anti-analysis primitives: GetTickCount, Sleep.&#34;,
+        &#34;points&#34;: 10
+      },
+      {
+        &#34;id&#34;: &#34;imports_evasion&#34;,
+        &#34;message&#34;: &#34;Evasion / anti-analysis primitives: GetTickCount, Sleep.&#34;,
+        &#34;points&#34;: 10
+      },
+      {
+        &#34;id&#34;: &#34;overlay&#34;,
+        &#34;message&#34;: &#34;File contains an overlay (96295352 bytes).&#34;,
+        &#34;points&#34;: 8
+      },
+      {
+        &#34;id&#34;: &#34;overlay&#34;,
+        &#34;message&#34;: &#34;File contains an overlay (96295352 bytes).&#34;,
+        &#34;points&#34;: 8
+      }
+    ],
+    &#34;level&#34;: &#34;critical&#34;,
+    &#34;value&#34;: 100
+  },
+  &#34;target&#34;: {
+    &#34;hashes&#34;: {
+      &#34;md5&#34;: &#34;e6a76ed3ed4463c842f6344239a8c4ef&#34;,
+      &#34;sha1&#34;: &#34;9680681c8426ed46bbe10533817dd067e73473cf&#34;,
+      &#34;sha256&#34;: &#34;373a93e9b5ffa3559938424a2aabd3338786cff7bef084641c2c5e5bfb44325e&#34;
+    },
+    &#34;path&#34;: &#34;/Users/Qublaikhan_1/PrismEX_v0.3.1_QK_clean/Wireshark-4.6.2-x64.exe&#34;,
+    &#34;size&#34;: 96624568,
+    &#34;type&#34;: &#34;unknown&#34;
+  },
+  &#34;timing&#34;: {
+    &#34;seconds&#34;: 34.0179
+  },
+  &#34;tool&#34;: {
+    &#34;name&#34;: &#34;PrismEX&#34;,
+    &#34;version&#34;: &#34;0.3.1&#34;
+  }
+}</script>
+  <script>
+    (function(){
+      const btn = document.getElementById('download-json');
+      const el = document.getElementById('report-json');
+      if(!btn || !el) return;
+      btn.addEventListener('click', function(){
+        try{
+          const blob = new Blob([el.textContent || ""], {type: "application/json;charset=utf-8"});
+          const a = document.createElement('a');
+          const name = ((document.title || "prismex_report") + ".json").replace(/[^a-z0-9._-]+/gi, "_");
+          a.href = URL.createObjectURL(blob);
+          a.download = name;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+        }catch(e){}
+      });
+    })();
+  </script>
+
+</body>
+</html>

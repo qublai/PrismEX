@@ -1,0 +1,4 @@
+pefile
+python-magic
+yara-python
+jinja2

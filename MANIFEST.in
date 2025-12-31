@@ -1,0 +1,5 @@
+recursive-include prismex/config *.json
+recursive-include prismex/data/signatures *.json *.txt
+recursive-include prismex/data/signatures/yara_plugins *.yar *.yara
+recursive-include prismex/templates *.j2
+recursive-include examples *.py

@@ -1,0 +1,81 @@
+{
+  "enable_network_lookups": false,
+  "rules": {
+    "heuristics": {
+      "entrypoint_nonexec": {
+        "score": 14,
+        "severity": "high"
+      },
+      "few_sections": {
+        "min_sections": 3,
+        "score": 6,
+        "severity": "medium"
+      },
+      "high_entropy": {
+        "entropy_threshold": 7.2,
+        "min_raw_size": 4096,
+        "score": 10,
+        "severity": "medium"
+      },
+      "no_imports": {
+        "score": 6,
+        "severity": "medium"
+      },
+      "ordinal_heavy_imports": {
+        "score": 5,
+        "severity": "medium"
+      },
+      "overlay": {
+        "min_bytes": 1048576,
+        "min_fraction": 0.1,
+        "score": 8,
+        "severity": "medium"
+      },
+      "overrides": {},
+      "packerish_sections": {
+        "score": 8,
+        "severity": "medium"
+      },
+      "rwx_section": {
+        "score": 18,
+        "severity": "high"
+      },
+      "strings_base64ish": {
+        "min_count": 3,
+        "score": 3,
+        "severity": "low"
+      },
+      "strings_ips": {
+        "score": 6,
+        "severity": "medium"
+      },
+      "strings_urls": {
+        "score": 6,
+        "severity": "medium"
+      },
+      "tls_callbacks": {
+        "score": 10,
+        "severity": "medium"
+      }
+    },
+    "scoring": {
+      "overall_cap": 100,
+      "suspicious_apis": {
+        "base": 5,
+        "cap": 25,
+        "per_api": 1
+      },
+      "thresholds": {
+        "critical": 75,
+        "high": 50,
+        "medium": 20
+      },
+      "yara": {
+        "base": 25,
+        "cap": 40,
+        "per_hit": 5
+      }
+    }
+  },
+  "virustotal_api_key": ""
+}

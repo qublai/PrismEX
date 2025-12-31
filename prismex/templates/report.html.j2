@@ -1,0 +1,224 @@
+{# @QK #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PrismEX Report - {{ report.target.path }}</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --low: #10b981;
+      --medium: #f59e0b;
+      --high: #ef4444;
+      --critical: #a855f7;
+    }
+    body{margin:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--text)}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .h{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .title{font-size:20px;font-weight:700}
+    .sub{color:var(--muted);margin-top:6px;word-break:break-all}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .card h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px 0;color:var(--muted)}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:8px 12px;font-size:14px}
+    .k{color:var(--muted)}
+    .v{word-break:break-all}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;font-size:12px}
+.btn:hover{background:rgba(255,255,255,.08)}
+.btnrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .lvl-low .dot{background:var(--low)}
+    .lvl-medium .dot{background:var(--medium)}
+    .lvl-high .dot{background:var(--high)}
+    .lvl-critical .dot{background:var(--critical)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .list{margin:0;padding-left:18px}
+    .pill{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);margin:3px 6px 0 0;font-size:12px}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-bottom:1px solid var(--border);padding:8px 6px;text-align:left;font-size:13px;vertical-align:top}
+    .table th{color:var(--muted);font-weight:600}
+    .muted{color:var(--muted)}
+    .footer{margin-top:22px;color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="h">
+      <div>
+        <div class="title">{{ report.tool.name }} v{{ report.tool.version }}</div>
+        <div class="sub mono">{{ report.target.path }}</div>
+      </div>
+      {% set lvl = report.score.level if report.score else 'low' %}
+      <div class="btnrow">
+      <button class="btn" id="download-json" type="button">⬇ Download JSON</button>
+      <div class="badge lvl-{{ lvl }}">
+        <span class="dot"></span>
+        <span><strong>Score:</strong> {{ report.score.value if report.score else 0 }}/100</span>
+        <span class="muted">{{ (report.score.level or '').upper() if report.score else '' }}</span>
+      </div>
+    </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Target</h2>
+        <div class="kv">
+          <div class="k">Type</div><div class="v">{{ report.target.type }}</div>
+          <div class="k">Size</div><div class="v">{{ report.target.size }} bytes</div>
+          <div class="k">MD5</div><div class="v mono">{{ report.target.hashes.md5 }}</div>
+          <div class="k">SHA1</div><div class="v mono">{{ report.target.hashes.sha1 }}</div>
+          <div class="k">SHA256</div><div class="v mono">{{ report.target.hashes.sha256 }}</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>PE Summary</h2>
+        <div class="kv">
+          <div class="k">Timestamp (UTC)</div><div class="v">{{ report.pe.timestamp_utc }}</div>
+          <div class="k">Machine</div><div class="v mono">{{ report.pe.machine }}</div>
+          <div class="k">Subsystem</div><div class="v">{{ report.pe.subsystem }}</div>
+          <div class="k">ImageBase</div><div class="v mono">{{ report.pe.imagebase }}</div>
+          <div class="k">Entrypoint RVA</div><div class="v mono">{{ report.pe.entrypoint_rva }}</div>
+          <div class="k">Imphash</div><div class="v mono">{{ report.pe.imphash }}</div>
+          <div class="k">Is DLL</div><div class="v">{{ report.pe.is_dll }}</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Top Score Factors</h2>
+        {% if report.score and report.score.breakdown %}
+          <ul class="list">
+            {% for c in report.score.breakdown[:10] %}
+              <li><span class="mono">+{{ c.points }}</span> <strong>{{ c.id }}</strong> — {{ c.message }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="muted">No score components available.</div>
+        {% endif %}
+      </div>
+
+      <div class="card">
+        <h2>Indicators</h2>
+        {% if report.indicators and report.indicators|length > 0 %}
+          <table class="table">
+            <thead><tr><th>Severity</th><th>ID</th><th>Message</th></tr></thead>
+            <tbody>
+              {% for i in report.indicators %}
+                <tr>
+                  <td>{{ i.severity }}</td>
+                  <td class="mono">{{ i.id }}</td>
+                  <td>{{ i.message }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="muted">None</div>
+        {% endif %}
+      </div>
+
+      <div class="card">
+        <h2>Heuristics (metrics)</h2>
+        {% set m = report.analysis.heuristics.metrics if report.analysis.heuristics is defined else {} %}
+        <div class="kv">
+          <div class="k">Overlay</div><div class="v mono">{{ m.overlay_size or 0 }} bytes</div>
+          <div class="k">High entropy sections</div><div class="v">{{ (m.high_entropy_sections|length) if m.high_entropy_sections is defined else 0 }}</div>
+          <div class="k">RWX sections</div><div class="v">{{ (m.rwx_sections|length) if m.rwx_sections is defined else 0 }}</div>
+          <div class="k">Packerish sections</div><div class="v">{{ (m.packerish_sections|join(', ')) if m.packerish_sections is defined else '' }}</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>YARA Matches</h2>
+        {% if report.analysis.yara is defined and report.analysis.yara and report.analysis.yara|length > 0 %}
+          {% for y in report.analysis.yara[:50] %}
+            <span class="pill mono">{{ y.rule if y.rule is defined else y }}</span>
+          {% endfor %}
+          {% if report.analysis.yara|length > 50 %}
+            <div class="muted" style="margin-top:8px">... ({{ report.analysis.yara|length - 50 }} more)</div>
+          {% endif %}
+        {% else %}
+          <div class="muted">No matches</div>
+        {% endif %}
+      </div>
+
+      <div class="card" style="grid-column:1/-1">
+        <h2>Sections</h2>
+        {% if report.analysis.sections is defined and report.analysis.sections.details is defined %}
+          <table class="table">
+            <thead><tr><th>Name</th><th>Entropy</th><th>Exec</th><th>Raw</th><th>VA</th></tr></thead>
+            <tbody>
+            {% for s in report.analysis.sections.details %}
+              <tr>
+                <td class="mono">{{ s.section_name }}</td>
+                <td>{{ '%.2f'|format(s.entropy) }}</td>
+                <td>{{ s.executable }}</td>
+                <td>{{ s.size_of_raw_data }}</td>
+                <td class="mono">{{ s.virtual_address }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="muted">No section data</div>
+        {% endif %}
+      </div>
+
+      <div class="card" style="grid-column:1/-1">
+        <h2>Imports (summary)</h2>
+        {% if report.analysis.imports is defined and report.analysis.imports|length > 0 %}
+          <div class="muted">Showing up to 20 DLLs.</div>
+          <table class="table">
+            <thead><tr><th>DLL</th><th>Imported functions (first 20)</th></tr></thead>
+            <tbody>
+            {% for dll, funcs in (report.analysis.imports|dictsort)[:20] %}
+              <tr>
+                <td class="mono">{{ dll }}</td>
+                <td class="mono">{{ (funcs[:20]|join(', ')) }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="muted">No imports</div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Generated by PrismEX • Offline static analysis • Timing: {{ report.timing.seconds if report.timing is defined else '' }}s
+    </div>
+  </div>
+
+  <script id="report-json" type="application/json">{{ report_json | e }}</script>
+  <script>
+    (function(){
+      const btn = document.getElementById('download-json');
+      const el = document.getElementById('report-json');
+      if(!btn || !el) return;
+      btn.addEventListener('click', function(){
+        try{
+          const blob = new Blob([el.textContent || ""], {type: "application/json;charset=utf-8"});
+          const a = document.createElement('a');
+          const name = ((document.title || "prismex_report") + ".json").replace(/[^a-z0-9._-]+/gi, "_");
+          a.href = URL.createObjectURL(blob);
+          a.download = name;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+        }catch(e){}
+      });
+    })();
+  </script>
+
+</body>
+</html>
