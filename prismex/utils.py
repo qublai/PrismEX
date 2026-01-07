@@ -17,7 +17,7 @@ import hashlib
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Iterable, Iterator, List, Optional
+from typing import Any, Dict, Iterator, List, Optional
 
 try:
     import pefile
@@ -293,7 +293,9 @@ def list_imports(pe) -> Dict[str, list]:
         return imports
 
     for entry in pe.DIRECTORY_ENTRY_IMPORT:
-        dll = entry.dll.decode(errors="ignore") if isinstance(entry.dll, (bytes, bytearray)) else str(entry.dll)
+        dll = (
+            entry.dll.decode(errors="ignore") if isinstance(entry.dll, (bytes, bytearray)) else str(entry.dll)
+        )
         funcs = []
         for imp in entry.imports:
             if imp.name:

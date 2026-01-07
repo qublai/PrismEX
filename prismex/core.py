@@ -265,7 +265,9 @@ class PrismEXAnalyzer:
         # -----------------------------
         # Plugins can add analysis outputs and/or add scored indicators.
         try:
-            plugins = discover_plugins(plugin_dirs=self.plugin_dirs, include_builtins=self.include_builtin_plugins)
+            plugins = discover_plugins(
+                plugin_dirs=self.plugin_dirs, include_builtins=self.include_builtin_plugins
+            )
             ctx = PluginContext(
                 analyzer=self,
                 path=path,

@@ -2,343 +2,263 @@
 # -*- coding: utf-8 -*-
 # @QK
 
+"""PE data directory extraction (legacy helper).
 
-"""PE data directory extraction.
+This module contains small helpers for extracting information from common PE
+data directories:
 
-This module provides helpers to extract information from common PE data
-directories such as:
-- imports/exports
+- imports / exports
 - TLS directory
 - relocations
 - debug directory
 - resources
 
-The implementation is intentionally defensive (lots of try/except) because
-malformed samples are common in malware triage.
+The implementation is intentionally defensive because malformed samples are
+common in malware triage.
+
+Notes:
+- PrismEX's core engine does *not* depend on this module directly, but it is
+  shipped for advanced users and plugins.
 
 @QK
 """
 
+from __future__ import annotations
+
+import binascii
+import re
+from typing import Any, Dict, List
+
 import pefile
 
-def get_import(pe):
-	array = []
-	library = []
-	libdict = {}
 
-	for entry in pe.DIRECTORY_ENTRY_IMPORT:
-		dll = entry.dll.decode('ascii')
-		for imp in entry.imports:
-			address = imp.address
-			try:
-				function = imp.name.decode('ascii')
-			except:
-				function = str(imp.name) #.decode('ascii')
-			else:
-				pass
-			
-			if dll not in library:
-				library.append(dll)
-			array.append({
-				"library": dll, 
-				"offset": address,
-				"function": function
-				})
-	
-	for key in library:
-		libdict[key] = []
-	
-	for lib in library:
-		for item in array:
-			if lib == item['library']:
-				libdict[lib].append({"offset": item['offset'], "function": item['function']})
-	return libdict
+def get_import(pe: pefile.PE) -> Dict[str, List[Dict[str, Any]]]:
+    """Return imported functions grouped by DLL name."""
+    libdict: Dict[str, List[Dict[str, Any]]] = {}
 
-def get_export(pe):
-	array = []
-	try:
-		for exp in pe.DIRECTORY_ENTRY_EXPORT.symbols:
-			# No dll
-			address = pe.OPTIONAL_HEADER.ImageBase + exp.address
-			function = exp.name.decode('ascii')
-			array.append({"offset": address, "function": function})
-	except:
-		pass
-	return array
+    try:
+        entries = pe.DIRECTORY_ENTRY_IMPORT
+    except Exception:
+        return libdict
 
-def get_debug(pe):
-	DEBUG_TYPE = {
-			"IMAGE_DEBUG_TYPE_UNKNOWN"   : 0,
-			"IMAGE_DEBUG_TYPE_COFF"      : 1,
-			"IMAGE_DEBUG_TYPE_CODEVIEW"  : 2,
-			"IMAGE_DEBUG_TYPE_FPO"       : 3,
-			"IMAGE_DEBUG_TYPE_MISC"      : 4,
-			"IMAGE_DEBUG_TYPE_EXCEPTION" : 5,
-			"IMAGE_DEBUG_TYPE_FIXUP"     : 6,
-			"IMAGE_DEBUG_TYPE_BORLAND"   : 9,
-			}
-	
-	result = {}
-	# https://github.com/mnemonic-no/dnscache/blob/master/tools/pdbinfo.py
-	for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
-		if d.name == "IMAGE_DIRECTORY_ENTRY_DEBUG": break
+    for entry in entries:
+        try:
+            dll = entry.dll.decode("ascii", errors="replace")
+        except Exception:
+            dll = str(entry.dll)
 
-	if not d or d.name != "IMAGE_DIRECTORY_ENTRY_DEBUG":
-		return result
+        libdict.setdefault(dll, [])
+        for imp in getattr(entry, "imports", []) or []:
+            address = getattr(imp, "address", None)
+            try:
+                function = imp.name.decode("ascii", errors="replace")  # type: ignore[union-attr]
+            except Exception:
+                function = str(getattr(imp, "name", ""))
 
-	debug_directories = pe.parse_debug_directory(d.VirtualAddress, d.Size)
-	for debug_directory in debug_directories:
-		if debug_directory.struct.Type == DEBUG_TYPE["IMAGE_DEBUG_TYPE_CODEVIEW"]:
-			result.update({
-				"PointerToRawData": debug_directory.struct.PointerToRawData, 
-				"size": debug_directory.struct.SizeOfData
-				})
-			return result
-	return result
+            libdict[dll].append({"offset": address, "function": function})
 
-def get_relocations(pe):
-	result = {}
-	for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
-		if d.name == "IMAGE_DIRECTORY_ENTRY_BASERELOC": break
-
-	if not d or d.name != "IMAGE_DIRECTORY_ENTRY_BASERELOC":
-		return result
-
-	result.update({"VirtualAddress": d.VirtualAddress, "Size": d.Size})
-	reloc_directories = pe.parse_relocations_directory(d.VirtualAddress, d.Size)
-	result.update({"count": len(reloc_directories)})
-	i = 0
-	my_items = {}
-	for items in reloc_directories:
-		i = i+1
-		for item in items.entries:
-			my_items.update({"reloc_"+str(i): len(items.entries)})
-	result.update({"details": my_items})
-	return result
-
-def get_tls(pe):
-	result = {}
-	for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
-		if d.name == "IMAGE_DIRECTORY_ENTRY_TLS": break
-
-	if not d or d.name != "IMAGE_DIRECTORY_ENTRY_TLS":
-		return result
-
-	tls_directories = pe.parse_directory_tls(d.VirtualAddress, d.Size).struct
-	"""
-	[IMAGE_TLS_DIRECTORY]
-	0x0        0x0   StartAddressOfRawData:         0x905A4D  
-	0x4        0x4   EndAddressOfRawData:           0x3       
-	0x8        0x8   AddressOfIndex:                0x4       
-	0xC        0xC   AddressOfCallBacks:            0xFFFF    
-	0x10       0x10  SizeOfZeroFill:                0xB8      
-	0x14       0x14  Characteristics:               0x0 
-	"""
-	result.update({
-		"StartAddressOfRawData": tls_directories.StartAddressOfRawData,
-		"EndAddressOfRawData": tls_directories.EndAddressOfRawData,
-		"AddressOfIndex": tls_directories.AddressOfIndex,
-		"AddressOfCallBacks": tls_directories.AddressOfCallBacks,
-		"SizeOfZeroFill": tls_directories.SizeOfZeroFill,
-		"Characteristics": tls_directories.Characteristics,
-		})
-
-	return result
-
-import re
-import binascii
-def get_resources(pe):
-	res_array = []
-	try:
-		'''
-		# resource types					# description
-		RT_CURSOR = 1						# Hardware-dependent cursor resource.
-		RT_BITMAP = 2						# Bitmap resource.
-		RT_ICON = 3							# Hardware-dependent icon resource.
-		RT_MENU = 4							# Menu resource.
-		RT_DIALOG = 5						# Dialog box.
-		RT_STRING = 6						# String-table entry.
-		RT_FONTDIR = 7						# Font directory resource.
-		RT_FONT = 8							# Font resource.
-		RT_ACCELERATOR = 9					# Accelerator table.
-		RT_RCDATA = 10						# Application-defined resource (raw data.)
-		RT_MESSAGETABLE = 11				# Message-table entry.
-		RT_VERSION = 16						# Version resource.
-		RT_DLGINCLUDE = 17					# Allows a resource editing tool to associate a string with an .rc file.
-		RT_PLUGPLAY = 19					# Plug and Play resource.
-		RT_VXD = 20							# VXD.
-		RT_ANICURSOR = 21					# Animated cursor.
-		RT_ANIICON = 22						# Animated icon.
-		RT_HTML = 23						# HTML resource.
-		RT_MANIFEST = 24					# Side-by-Side Assembly Manifest.
-
-		RT_GROUP_CURSOR = RT_CURSOR + 11	# Hardware-independent cursor resource.
-		RT_GROUP_ICON = RT_ICON + 11		# Hardware-independent icon resource.
-		'''
-		for resource_type in pe.DIRECTORY_ENTRY_RESOURCE.entries:
-			if resource_type.name is not None:
-				name = "%s" % resource_type.name
-			else:
-				name = "%s" % pefile.RESOURCE_TYPE.get(resource_type.struct.Id)
-			if name == None:
-				name = "%d" % resource_type.struct.Id
-
-			if hasattr(resource_type, 'directory'):
-				i = 0
-				for resource_id in resource_type.directory.entries:
-					if len(resource_type.directory.entries) > 1:
-						i = i+1
-						newname = name+'_'+str(i)
-					else:
-						newname = name
-
-					for resource_lang in resource_id.directory.entries:
-						data_byte = pe.get_data(resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size)[:50]
-						is_pe = False
-						if magic_check(data_byte)[:8]:
-							is_pe = True
-						lang = pefile.LANG.get(resource_lang.data.lang, '*unknown*')
-						sublang = pefile.get_sublang_name_for_lang(resource_lang.data.lang, resource_lang.data.sublang)
-
-						res_array.append({
-							"name": newname,
-							"data": str(data_byte),
-							"executable": is_pe,
-							"offset": resource_lang.data.struct.OffsetToData,
-							"size": resource_lang.data.struct.Size, 
-							"language": lang, 
-							"sublanguage": sublang
-							})
-	except:
-		pass
-
-	return res_array
-
-def magic_check(data):
-	return re.findall(r'4d5a90', str(binascii.b2a_hex(data)))
+    return libdict
 
 
-def get_sign(pe):
-	"""Return Authenticode signer details if present.
+def get_export(pe: pefile.PE) -> List[Dict[str, Any]]:
+    """Return exported functions as a list."""
+    exports: List[Dict[str, Any]] = []
 
-	Best-effort: requires the optional `M2Crypto` dependency. If it is not
-	installed, returns an empty dict.
-	"""
-	try:
-		import M2Crypto  # type: ignore
-	except Exception:
-		return {}
+    try:
+        symbols = pe.DIRECTORY_ENTRY_EXPORT.symbols
+    except Exception:
+        return exports
 
-	result = {}
-	
-	cert_address = pe.OPTIONAL_HEADER.DATA_DIRECTORY[pefile.DIRECTORY_ENTRY['IMAGE_DIRECTORY_ENTRY_SECURITY']].VirtualAddress
-	cert_size = pe.OPTIONAL_HEADER.DATA_DIRECTORY[pefile.DIRECTORY_ENTRY['IMAGE_DIRECTORY_ENTRY_SECURITY']].Size
+    for exp in symbols:
+        try:
+            address = pe.OPTIONAL_HEADER.ImageBase + exp.address
+        except Exception:
+            address = getattr(exp, "address", None)
 
-	if cert_address != 0 and cert_size !=0:
-		signature = pe.write()[cert_address+8:]
-		details = {}
+        try:
+            function = exp.name.decode("ascii", errors="replace")  # type: ignore[union-attr]
+        except Exception:
+            function = str(getattr(exp, "name", ""))
 
-		bio = M2Crypto.BIO.MemoryBuffer(bytes(signature))
-		if bio:
-			pkcs7_obj = M2Crypto.m2.pkcs7_read_bio_der(bio.bio_ptr())
-			if pkcs7_obj:
-				p7 = M2Crypto.SMIME.PKCS7(pkcs7_obj)
-				for cert in p7.get0_signers(M2Crypto.X509.X509_Stack()) or []:
-					subject = cert.get_subject()
+        exports.append({"offset": address, "function": function})
 
-					try:
-						serial_number = "%032x" % cert.get_serial_number()
-					except:
-						serial_number = ''
-					try:
-						common_name = subject.CN
-					except:
-						common_name = ''
-					try:
-						country = subject.C
-					except:
-						country = ''
-					try:
-						locality = subject.L
-					except:
-						locality = ''
-					try:
-						organization = subject.O
-					except:
-						organization = ''
-					try:
-						email = subject.Email
-					except:
-						email = ''
-					try:
-						valid_from = cert.get_not_before()
-					except:
-						valid_from = ''
-					try:
-						valid_to = cert.get_not_after()
-					except:
-						valid_to = ''
-					details.update({
-						"serial_number": str(serial_number),
-						"common_name": str(common_name),
-						"country": str(country),
-						"locality": str(locality),
-						"organization": str(organization),
-						"email": str(email),
-						"valid_from": str(valid_from),
-						"valid_to": str(valid_to),
-						"hash": {
-							"sha1": "%040x" % int(cert.get_fingerprint("sha1"), 16),
-							"md5": "%032x" % int(cert.get_fingerprint("md5"), 16),
-							"sha256": "%064x" % int(cert.get_fingerprint("sha256"), 16)
-							}
-					})
-	
-		result.update({
-			"virtual_address": cert_address, 
-			"block_size": cert_size, 
-			"details": details
-			})
+    return exports
 
-	return result
 
-def get(pe):
-	result = {}
-	# The directory of imported symbols
-	try:
-		result.update({"import": get_import(pe)}) # dict
-	except:
-		result.update({"import": {}})
+def get_debug(pe: pefile.PE) -> Dict[str, Any]:
+    """Extract CodeView debug directory information if present."""
+    debug_type = {
+        "IMAGE_DEBUG_TYPE_UNKNOWN": 0,
+        "IMAGE_DEBUG_TYPE_COFF": 1,
+        "IMAGE_DEBUG_TYPE_CODEVIEW": 2,
+        "IMAGE_DEBUG_TYPE_FPO": 3,
+        "IMAGE_DEBUG_TYPE_MISC": 4,
+        "IMAGE_DEBUG_TYPE_EXCEPTION": 5,
+        "IMAGE_DEBUG_TYPE_FIXUP": 6,
+        "IMAGE_DEBUG_TYPE_BORLAND": 9,
+    }
 
-	# The directory of exported symbols; mostly used for DLLs.
-	try: 
-		result.update({"export": get_export(pe)}) # list
-	except:
-		result.update({"export": []})
-	# Debug directory - contents is compiler dependent.
-	try:
-		result.update({"debug": get_debug(pe)}) # dict
-	except:
-		result.update({"debug": {}})
-	# Thread local storage directory - structure unknown; contains variables that are declared
-	try:
-		result.update({"tls": get_tls(pe)}) # dict
-	except:
-		result.update({"tls": {}})
-	# The resources, such as dialog boxes, menus, icons and so on, are stored in the data directory
-	try:
-		result.update({"resources": get_resources(pe)}) # list
-	except:
-		result.update({"resources": []})
-	# PointerToRelocations, NumberOfRelocations, NumberOfLinenumbers
-	try:
-		result.update({"relocations": get_relocations(pe)}) # dict
-	except:
-		result.update({"relocations": {}})
-	# Certificate
-	try:
-		result.update({"sign": get_sign(pe)}) # dict
-	except:
-		result.update({"sign": {}})
-	
-	return result
+    debug_dir = None
+    for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
+        if getattr(d, "name", None) == "IMAGE_DIRECTORY_ENTRY_DEBUG":
+            debug_dir = d
+            break
+
+    if debug_dir is None:
+        return {}
+
+    try:
+        debug_directories = pe.parse_debug_directory(debug_dir.VirtualAddress, debug_dir.Size)
+    except Exception:
+        return {}
+
+    for debug_directory in debug_directories:
+        try:
+            if debug_directory.struct.Type == debug_type["IMAGE_DEBUG_TYPE_CODEVIEW"]:
+                return {
+                    "PointerToRawData": debug_directory.struct.PointerToRawData,
+                    "size": debug_directory.struct.SizeOfData,
+                }
+        except Exception:
+            continue
+
+    return {}
+
+
+def get_relocations(pe: pefile.PE) -> Dict[str, Any]:
+    """Extract base relocation directory metadata."""
+    reloc_dir = None
+    for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
+        if getattr(d, "name", None) == "IMAGE_DIRECTORY_ENTRY_BASERELOC":
+            reloc_dir = d
+            break
+
+    if reloc_dir is None:
+        return {}
+
+    result: Dict[str, Any] = {"VirtualAddress": reloc_dir.VirtualAddress, "Size": reloc_dir.Size}
+
+    try:
+        reloc_directories = pe.parse_relocations_directory(reloc_dir.VirtualAddress, reloc_dir.Size)
+    except Exception:
+        reloc_directories = []
+
+    result["count"] = len(reloc_directories)
+
+    details: Dict[str, Any] = {}
+    for i, items in enumerate(reloc_directories, start=1):
+        try:
+            details[f"reloc_{i}"] = len(items.entries)
+        except Exception:
+            details[f"reloc_{i}"] = 0
+    result["details"] = details
+
+    return result
+
+
+def get_tls(pe: pefile.PE) -> Dict[str, Any]:
+    """Extract TLS directory fields if present."""
+    tls_dir = None
+    for d in pe.OPTIONAL_HEADER.DATA_DIRECTORY:
+        if getattr(d, "name", None) == "IMAGE_DIRECTORY_ENTRY_TLS":
+            tls_dir = d
+            break
+
+    if tls_dir is None:
+        return {}
+
+    try:
+        tls_struct = pe.parse_directory_tls(tls_dir.VirtualAddress, tls_dir.Size).struct
+    except Exception:
+        return {}
+
+    return {
+        "StartAddressOfRawData": getattr(tls_struct, "StartAddressOfRawData", None),
+        "EndAddressOfRawData": getattr(tls_struct, "EndAddressOfRawData", None),
+        "AddressOfIndex": getattr(tls_struct, "AddressOfIndex", None),
+        "AddressOfCallBacks": getattr(tls_struct, "AddressOfCallBacks", None),
+        "SizeOfZeroFill": getattr(tls_struct, "SizeOfZeroFill", None),
+        "Characteristics": getattr(tls_struct, "Characteristics", None),
+    }
+
+
+def get_resources(pe: pefile.PE) -> List[Dict[str, Any]]:
+    """Extract a small preview of resources (best effort)."""
+    res_array: List[Dict[str, Any]] = []
+
+    try:
+        resources = pe.DIRECTORY_ENTRY_RESOURCE.entries
+    except Exception:
+        return res_array
+
+    for resource_type in resources:
+        if resource_type.name is not None:
+            name = f"{resource_type.name}"
+        else:
+            name = f"{pefile.RESOURCE_TYPE.get(resource_type.struct.Id)}"
+
+        if name is None or name == "None":
+            name = f"{resource_type.struct.Id}"
+
+        if not hasattr(resource_type, "directory"):
+            continue
+
+        for idx, resource_id in enumerate(resource_type.directory.entries, start=1):
+            newname = f"{name}_{idx}" if len(resource_type.directory.entries) > 1 else name
+
+            try:
+                lang_entries = resource_id.directory.entries
+            except Exception:
+                continue
+
+            for resource_lang in lang_entries:
+                try:
+                    data_byte = pe.get_data(
+                        resource_lang.data.struct.OffsetToData, resource_lang.data.struct.Size
+                    )[:50]
+                except Exception:
+                    data_byte = b""  # type: ignore[assignment]
+
+                is_pe = bool(magic_check(data_byte))
+
+                try:
+                    lang = pefile.LANG.get(resource_lang.data.lang, "*unknown*")
+                except Exception:
+                    lang = "*unknown*"
+
+                try:
+                    sublang = pefile.get_sublang_name_for_lang(
+                        resource_lang.data.lang, resource_lang.data.sublang
+                    )
+                except Exception:
+                    sublang = "*unknown*"
+
+                try:
+                    offset = resource_lang.data.struct.OffsetToData
+                    size = resource_lang.data.struct.Size
+                except Exception:
+                    offset = None
+                    size = None
+
+                res_array.append(
+                    {
+                        "name": newname,
+                        "data": str(data_byte),
+                        "executable": is_pe,
+                        "offset": offset,
+                        "size": size,
+                        "language": lang,
+                        "sublanguage": sublang,
+                    }
+                )
+
+    return res_array
+
+
+def magic_check(data: bytes) -> List[str]:
+    """Return matches for a minimal MZ header hex pattern."""
+    try:
+        hex_bytes = binascii.b2a_hex(data)
+    except Exception:
+        return []
+    return re.findall(r"4d5a90", str(hex_bytes))

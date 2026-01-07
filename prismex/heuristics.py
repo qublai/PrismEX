@@ -437,7 +437,6 @@ def run_heuristics(
                         )
                     )
 
-
     # ---- TLS callbacks ----
     try:
         tls = getattr(pe, "DIRECTORY_ENTRY_TLS", None)
@@ -479,7 +478,9 @@ def run_heuristics(
         )
 
     try:
-        ordinal_count = sum(1 for x in flat_imports if isinstance(x, str) and x.lower().startswith("ordinal:"))
+        ordinal_count = sum(
+            1 for x in flat_imports if isinstance(x, str) and x.lower().startswith("ordinal:")
+        )
         total_imps = len(flat_imports)
         if total_imps >= 20:
             ratio = ordinal_count / max(1, total_imps)

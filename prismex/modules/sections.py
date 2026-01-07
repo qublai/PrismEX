@@ -67,4 +67,7 @@ def get_result(pe) -> Dict[str, Any]:
             }
         )
 
-    return {"count": int(getattr(getattr(pe, "FILE_HEADER", None), "NumberOfSections", 0)), "details": details}
+    return {
+        "count": int(getattr(getattr(pe, "FILE_HEADER", None), "NumberOfSections", 0)),
+        "details": details,
+    }

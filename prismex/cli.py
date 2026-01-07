@@ -62,7 +62,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Glob pattern(s) for directory scanning (repeatable). Defaults to common PE extensions.",
     )
     scan.add_argument("--max-files", type=int, default=None, help="Stop after scanning N files (batch)")
-    scan.add_argument("--follow-symlinks", action="store_true", help="Follow symlinks when scanning directories")
+    scan.add_argument(
+        "--follow-symlinks", action="store_true", help="Follow symlinks when scanning directories"
+    )
 
     # Feature toggles
     scan.add_argument("--no-strings", action="store_true", help="Disable printable string extraction")
@@ -70,7 +72,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     # Data sources
     scan.add_argument("--yara-dir", default=str(DEFAULT_YARA_DIR), help="Custom YARA rules directory")
-    scan.add_argument("--stringmatch", default=str(DEFAULT_STRINGMATCH_PATH), help="Custom stringmatch.json path")
+    scan.add_argument(
+        "--stringmatch", default=str(DEFAULT_STRINGMATCH_PATH), help="Custom stringmatch.json path"
+    )
     scan.add_argument(
         "--config",
         default=None,
@@ -79,7 +83,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     # Batch exports
     scan.add_argument("--csv", action="store_true", help="In batch mode, write a CSV summary")
-    scan.add_argument("--csv-out", default=None, help="CSV output path (defaults to <out>/summary.csv or ./summary.csv)")
+    scan.add_argument(
+        "--csv-out", default=None, help="CSV output path (defaults to <out>/summary.csv or ./summary.csv)"
+    )
 
     # Plugins
     scan.add_argument(

@@ -12,31 +12,46 @@ users.
 """
 
 import re
-import sys
-from oletools.olevba3 import VBA_Parser, TYPE_OLE, TYPE_OpenXML, TYPE_Word2003_XML, TYPE_MHTML
+from oletools.olevba3 import VBA_Parser
+
 
 def get_result(filename):
-	try:
-		behavior = {}
+    """Extract basic VBA macro behavior using oletools.
 
-		vbaparser = VBA_Parser(filename)
+    Returns an empty dict if the file is not a supported OLE/OpenXML container
+    or if parsing fails.
 
-		if vbaparser.detect_vba_macros():
-			results = vbaparser.analyze_macros()
-			for item in results:
-				details = re.sub(r'\(.*\)', '', str(item[2]))
-				details = details.replace('strings', 'str')
-				details = re.sub(r' $', '', details)
-				if item[0] == 'AutoExec':
-					behavior.update({item[1]: details})
-				if item[0] == 'Suspicious':
-					behavior.update({item[1]: details})
+    @QK
+    """
+    behavior = {}
 
-			macro = vbaparser.reveal()
-			attributes = re.findall(r'Attribute VB.*', macro, flags=re.MULTILINE)
-			macro = re.sub(r'Attribute VB.*', '', macro)
-			
-			return {"behavior": behavior, "macro": macro, "attributes": attributes}
-			vbaparser.close()
-	except:
-		return {}
+    try:
+        vbaparser = VBA_Parser(filename)
+    except Exception:
+        return {}
+
+    try:
+        if vbaparser.detect_vba_macros():
+            results = vbaparser.analyze_macros()
+            for item in results:
+                details = re.sub(r"\(.*\)", "", str(item[2]))
+                details = details.replace("strings", "str")
+                details = re.sub(r" $", "", details)
+
+                if item[0] in {"AutoExec", "Suspicious"}:
+                    behavior.update({item[1]: details})
+
+            macro = vbaparser.reveal()
+            attributes = re.findall(r"Attribute VB.*", macro, flags=re.MULTILINE)
+            macro = re.sub(r"Attribute VB.*", "", macro)
+
+            return {"behavior": behavior, "macro": macro, "attributes": attributes}
+
+        return {}
+    except Exception:
+        return {}
+    finally:
+        try:
+            vbaparser.close()
+        except Exception:
+            pass

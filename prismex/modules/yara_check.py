@@ -45,12 +45,14 @@ def yara_match_from_file(fileyara: str, filename: str) -> List[str]:
     return matches
 
 
-def yara_match_from_folder(folder_yara: str, filename: str, exclude: Optional[List[str]] = None) -> List[Dict[str, str]]:
+def yara_match_from_folder(
+    folder_yara: str, filename: str, exclude: Optional[List[str]] = None
+) -> List[Dict[str, str]]:
     y = _require_yara()
     exclude = exclude or []
     matches: List[Dict[str, str]] = []
 
-    for (dirpath, _dirnames, filenames) in walk(folder_yara):
+    for dirpath, _dirnames, filenames in walk(folder_yara):
         for f in filenames:
             if not str(f).endswith((".yar", ".yara")):
                 continue
