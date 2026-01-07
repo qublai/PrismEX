@@ -14,7 +14,14 @@ from setuptools import setup, find_packages
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8").splitlines()
+
+req_file = ROOT / "requirements.txt"
+requirements = [
+    line.strip()
+    for line in (req_file.read_text(encoding="utf-8").splitlines() if req_file.exists() else [])
+    if line.strip() and not line.strip().startswith("#")
+]
+
 
 long_description = ""
 readme_md = ROOT / "README.md"
