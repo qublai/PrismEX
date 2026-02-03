@@ -1,309 +1,355 @@
 # PrismEX
 
-PrismEX is a standalone, offline static analysis toolkit for Portable Executable (PE) files, built for fast, repeatable triage of Windows binaries. It extracts high-signal indicators (structure, imports, sections, strings, optional YARA), produces an explainable 0–100 risk score with a breakdown, and generates text/JSON/HTML reports suitable for both analysts and automation—without executing the sample.
-
-PrismEX focuses on:
-- **Speed and repeatability** (consistent results across runs)
-- **Explainability** (clear “why” behind indicators and scores)
-- **Operational outputs** (text for humans, JSON for pipelines, HTML for sharing)
-- **Extensibility** (plugins + configurable heuristics/scoring)
+PrismEX is a **developer-first** static analysis tool for **Portable Executable (PE)** files (EXE/DLL). It’s designed for **fast, offline, repeatable triage** and produces **structured output** you can feed into pipelines.
 
 ---
 
-## Features
+## Key Features
 
-### Batch & recursive scanning
-Scan a directory (optionally recursive) and process large sample sets with repeatable glob filtering (`--pattern` can be used multiple times). Directory scans produce consistent per-file results for pipelines and reporting.
+- **Batch & recursive scanning**
+  - Scan a single file or a directory
+  - Optional recursion + repeatable glob patterns for deterministic batches
 
-### Richer heuristics (offline)
-High-signal offline heuristics designed for practical triage, including:
-- **Overlay detection** (appended data often used by packers/droppers)
-- **Entropy checks** (high-entropy sections suggest packing/encryption)
-- **RWX section detection** (unusual permissions often correlate with unpacking/injection)
-- **Entrypoint sanity** (entrypoint placement and structural anomalies)
-- **Clustered import behavior** (behavioral grouping of APIs, not just raw lists)
-- **URL/IP string signals** (network artifacts extracted without execution)
+- **Richer offline heuristics**
+  - Overlay detection
+  - Section entropy signals
+  - RWX section detection
+  - Entrypoint sanity checks
+  - Import clustering / suspicious import behaviors
+  - URL/IP string signals
 
-### Explainable risk scoring (0–100)
-Stable score output with an explicit breakdown of top contributing factors. The score is intended for **prioritization/triage**, not a definitive verdict, and is designed to be tunable and auditable.
+- **Explainable risk scoring (0–100)**
+  - Stable numeric score with severity level buckets
+  - Transparent breakdown showing top contributors
+  - Tunable weights and thresholds via JSON rules config
 
-### Configurable scoring & heuristic weights (JSON)
-Tune scoring thresholds, per-heuristic weights, and enable/disable specific checks using a JSON config file—no code edits required. This makes PrismEX adaptable across environments (enterprise binaries vs. malware corpuses) while keeping a stable schema.
+- **YARA scanning (offline)**
+  - Bundled rules + custom `--yara-dir`
+  - Can be disabled when not available
 
-### YARA scanning (offline)
-Optional YARA matching using bundled rules plus custom rules via `--yara-dir`. YARA hits can be included in scoring (when configured) and are recorded in JSON/HTML reports.
+- **High-signal API indicators**
+  - Suspicious API detection via curated signatures (bundled `stringsmatch.json`)
+  - Helps surface “why this binary looks risky” quickly
 
-### High-signal API indicators
-Flags suspicious APIs using a curated list (bundled `stringsmatch.json`) plus additional behavior clusters to highlight patterns associated with injection, persistence, anti-analysis, credential access, or network behavior.
+- **Reports**
+  - Text (human-readable)
+  - JSON (machine-friendly)
+  - HTML (shareable)
+    - Single-file HTML reports
+    - Batch HTML index page
+    - Download JSON button embedded in HTML
+    - Batch index supports filtering + sorting
+    - Optional CSV export for batch summary
 
-### Reports (Text / JSON / HTML)
-- **Human-readable text** for quick terminal triage  
-- **Machine-friendly JSON** for pipelines, storage, and automation  
-- **Shareable HTML** for analyst review (single-file report or batch index)
+- **Plugin system**
+  - Load local plugins from a folder (`--plugin-dir`)
+  - Or install plugins via Python entry points (`prismex.plugins`)
 
-Each HTML report includes a **Download JSON** button. Batch HTML includes an index page with **client-side filtering and sorting**, and an optional CSV summary export for quick spreadsheet triage.
-
-### Optional CSV summary export for batch scans
-Emit a CSV summary during batch runs to rapidly sort/triage by score, severity bucket, and key indicators.
-
-### Plugin system
-Extend PrismEX without forking core logic:
-- Load local plugins from a folder (`--plugin-dir`)
-- Or install plugins via Python entry points (`prismex.plugins`)
-
-Plugins can enrich reports, add org-specific indicators, or contribute scored findings while keeping the core schema stable.
-
-### Packaging & CI-ready
-Includes GitHub Actions workflows that run lint/tests and build sdist/wheel artifacts for reproducible packaging and release readiness.
+- **CI & packaging friendly**
+  - Lint + test pipeline
+  - Build sdist/wheel support
 
 ---
 
 ## Supported Platforms
 
-- **Linux (recommended)**
+- **Linux** (recommended)
 - **macOS**
-- **Windows** (works in Python envs where `python-magic` is set up)
+- **Windows** (works in standard Python environments; see notes on `libmagic` below)
 
 ---
 
-## Installation
+# Installation (Developer Workflow)
 
-### 1) System dependencies
-PrismEX uses `python-magic` and (optionally) YARA (`yara-python`). If you can't install YARA, you can still run PrismEX with `--no-yara`.
+PrismEX “running options for users” below assume **dev mode**: clone the repo, create a venv, install editable, run commands from that environment.
 
-**Debian/Ubuntu:**
+## 0) Prerequisites
+
+- Python **3.9+**
+- Pip (latest recommended)
+
+### Notes about `python-magic` / `libmagic`
+PrismEX uses `python-magic` for file-type identification. Depending on OS, you may need system `libmagic`.
+
+---
+
+## macOS (Developer Install)
+
+### 1) Install system deps (Homebrew)
 ```bash
-sudo apt update
-sudo apt install -y python3 python3-pip python3-venv libmagic1
+brew install libmagic
 ```
 
-If `yara-python` fails to build on your platform, install your distro’s YARA development packages (names vary).
-
-### 2) Install PrismEX
-
-#### Option A — install from a local clone (recommended)
+### 2) Clone + venv + dev install
 ```bash
-git clone <your PrismEX repo url here>
-cd prismex
+cd ~
+git clone <YOUR_PRISMEX_REPO_URL>
+cd PrismEX
+
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -U pip
-pip install -r requirements.txt
-pip install -e .
+
+python -m pip install -U pip setuptools wheel
+python -m pip install -r requirements.txt
+python -m pip install -e ".[dev]"
 ```
 
-#### Option B — install as a normal package
+### 3) Verify
 ```bash
-pip install .
-```
-
-### Optional extras
-VirusTotal client helpers:
-```bash
-pip install .[vt]
-```
-
-Document/VBA analysis helpers (if you add doc modules):
-```bash
-pip install .[docs]
-```
-
-Authenticode parsing helper (optional, best-effort):
-```bash
-pip install .[sig]
+prismex --help
 ```
 
 ---
 
-## Quick Start
+## Linux (Ubuntu/Debian) (Developer Install)
 
-### Scan a PE and print a text report
+### 1) Install system deps
+```bash
+sudo apt-get update
+sudo apt-get install -y python3 python3-venv python3-pip libmagic1
+```
+
+### 2) Clone + venv + dev install
+```bash
+cd ~
+git clone <YOUR_PRISMEX_REPO_URL>
+cd PrismEX
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+python -m pip install -U pip setuptools wheel
+python -m pip install -r requirements.txt
+python -m pip install -e ".[dev]"
+```
+
+### 3) Verify
+```bash
+prismex --help
+```
+
+---
+
+## Windows (Developer Install)
+
+### 1) Install Python
+Install Python 3.9+ from the Microsoft Store or python.org, then confirm:
+```bat
+python --version
+```
+
+### 2) Get the repo (Git recommended)
+If you don’t have Git installed, install it first:
+```bat
+git --version
+```
+
+Clone:
+```bat
+cd %USERPROFILE%
+git clone <YOUR_PRISMEX_REPO_URL>
+cd PrismEX
+```
+
+### 3) Create + activate venv
+
+**PowerShell:**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+**CMD:**
+```bat
+python -m venv .venv
+.\.venv\Scripts\activate.bat
+```
+
+### 4) Install PrismEX (dev)
+```bat
+python -m pip install -U pip setuptools wheel
+python -m pip install -r requirements.txt
+python -m pip install -e ".[dev]"
+```
+
+### 5) `python-magic` on Windows (important)
+If you see errors related to `magic` / `libmagic`, the easiest fix in the **venv** is:
+```bat
+python -m pip install python-magic-bin
+```
+(You can keep `python-magic` installed; `python-magic-bin` provides Windows binaries in many setups.)
+
+### 6) Verify
+```bat
+prismex --help
+```
+
+---
+
+# Running PrismEX (Dev Mode)
+
+## Basic scan
 ```bash
 prismex scan ./sample.exe
 ```
 
-### Output JSON to stdout
+## JSON output to stdout
 ```bash
 prismex scan ./sample.exe --format json
 ```
 
-### Write JSON to a file
+## JSON output to a file
 ```bash
 prismex scan ./sample.exe --format json --out report.json
 ```
 
-### Generate an HTML report
+## HTML report (single file)
 ```bash
 prismex scan ./sample.exe --format html --out report.html
 ```
 
-### Disable heavier steps (strings / YARA)
+## Disable heavier steps
 ```bash
 prismex scan ./sample.exe --no-strings --no-yara
 ```
 
-### Use your own YARA rules directory
+## Use custom YARA rules
 ```bash
 prismex scan ./sample.exe --yara-dir ./my_yara_rules
 ```
 
 ---
 
-## Recursive directory scanning
+## Directory scanning
 
-Scan a folder (non-recursive by default):
+### Scan a folder (non-recursive)
 ```bash
 prismex scan ./samples --format json
 ```
 
-Scan recursively and output a batch JSON file:
+### Recursive scan + batch JSON
 ```bash
 prismex scan ./samples --recursive --format json --out batch.json
 ```
 
-Generate a batch HTML report (writes per-file HTML + an `index.html`):
+### Batch HTML report (writes per-file HTML + index.html)
 ```bash
 prismex scan ./samples --recursive --format html --out ./prismex_html
 # open ./prismex_html/index.html
 ```
 
-Restrict directory scanning using glob patterns (repeatable):
+### Restrict scanning with glob patterns
 ```bash
 prismex scan ./samples --recursive --pattern "*.exe" --pattern "*.dll" --format json
 ```
 
-Write a batch CSV summary:
+### Batch CSV summary
 ```bash
 prismex scan ./samples --recursive --format html --out ./prismex_html --csv
 # writes ./prismex_html/summary.csv
 ```
 
-Choose the CSV location explicitly:
+Or choose CSV location:
 ```bash
 prismex scan ./samples --recursive --format json --csv-out ./summary.csv
 ```
 
 ---
 
-## Tune heuristics / scoring without editing code (rules config)
+# Rules Config (Tune Heuristics & Scoring)
 
-PrismEX reads a JSON config file that can override scores, severity, and selected thresholds. A ready-to-edit example is included at the repo root:
+PrismEX can load a JSON config to override weights, thresholds, and enable/disable heuristics without editing code.
 
+Example file (repo root):
 - `prismex_rules.example.json`
 
-Run PrismEX with a custom config:
+Run with a custom config:
 ```bash
 prismex scan ./sample.exe --config ./prismex_rules.example.json --format json
 ```
 
-Common things to tune:
+Common knobs:
 - `rules.scoring.thresholds` — level boundaries
-- `rules.scoring.yara` / `rules.scoring.suspicious_apis` — scoring weights & caps
+- `rules.scoring.yara` / `rules.scoring.suspicious_apis` — weights & caps
 - `rules.heuristics.*.score` — per-heuristic weights
-- `rules.heuristics.overrides` — disable or override a specific heuristic by ID  
-  (e.g., set `{ "enabled": false }` for noisy checks)
+- `rules.heuristics.overrides` — disable/override a heuristic by ID (`{"enabled": false}`)
 
 ---
 
-## Plugins
+# Plugins
 
-### List plugins
+## List plugins
 ```bash
 prismex plugins list
 ```
 
-### Run plugins from a folder
+## Run plugins from a folder
 ```bash
 prismex scan ./sample.exe --plugin-dir ./examples/plugins --format json
 ```
 
-### Only run specific plugins
+## Run only specific plugins
 ```bash
 prismex scan ./sample.exe --enable-plugin example_metadata --format json
 ```
 
 ### Plugin API
 A plugin is a Python file that defines:
-```python
-PLUGIN_NAME = "..."
-def prismex_plugin(ctx): ...
-```
+- `PLUGIN_NAME = "..."`
+- `def prismex_plugin(ctx): ...`
 
-It receives a `ctx` object with:
+The `ctx` object provides:
 - `ctx.path` — target path
 - `ctx.pe` — loaded `pefile.PE` (best-effort)
-- `ctx.report` — mutable report dict you can extend
+- `ctx.report` — mutable report dict to extend
 - `ctx.options` — optional plugin options
 
-See: `examples/plugins/prismex_plugin_template.py`
+See:
+- `examples/plugins/prismex_plugin_template.py`
 
 ---
 
-## Report Schema (JSON)
+# Developer Checks
 
-The JSON output is designed to be stable and pipeline-friendly:
-
-```json
-{
-  "tool": { "name": "PrismEX", "version": "0.3.0" },
-  "target": {
-    "path": "/abs/path/sample.exe",
-    "size": 12345,
-    "type": "PE32 executable ...",
-    "hashes": { "md5": "...", "sha1": "...", "sha256": "..." }
-  },
-  "pe": {
-    "imphash": "...",
-    "timestamp_utc": "2020-01-01 00:00:00",
-    "is_dll": false,
-    "machine": "0x14c",
-    "subsystem": 2,
-    "imagebase": 4194304,
-    "entrypoint_rva": 4096
-  },
-  "analysis": {
-    "imports": { "KERNEL32.dll": ["CreateFileW", "..."] },
-    "sections": { "count": 6, "details": [ /* ... */ ] },
-    "directories": { /* ... */ },
-    "metadata": { /* ... */ },
-    "suspicious_apis": [ /* ... */ ],
-    "strings": { "count": 123, "samples": ["http://...", "..."] },
-    "yara": [ /* ... */ ],
-    "heuristics": {
-      "metrics": { "overlay_size": 0, "high_entropy_sections": [ /* ... */ ] },
-      "hits": [ { "id": "high_entropy", "severity": "medium", "score": 10, "message": "..." } ]
-    },
-    "plugins_run": [ { "name": "example_metadata", "status": "ok" } ]
-  },
-  "score": {
-    "value": 42,
-    "level": "medium",
-    "breakdown": [ { "id": "yara", "points": 25, "message": "..." } ]
-  },
-  "indicators": [
-    { "id": "yara_hits", "severity": "high", "message": "..." }
-  ],
-  "timing": { "seconds": 0.1234 }
-}
-```
-
----
-
-## CI / Packaging
-
-This repo includes:
-- `pyproject.toml` (PEP-517 build metadata)
-- `.github/workflows/ci.yml` (lint, tests, wheel build)
-- `.github/workflows/publish.yml` (optional: publish on tag `v*` via PyPI trusted publishing)
-
-Build locally:
+## Lint
 ```bash
-pip install -U build
-python -m build
+ruff check prismex tests
+```
+
+## Tests
+```bash
+pytest -q
 ```
 
 ---
 
-## Disclaimer
+# Troubleshooting
 
-PrismEX is provided for defensive analysis and research. Always ensure you have permission to analyze a given file and follow applicable laws and policies.
+## `prismex: command not found` (macOS/Linux)
+You likely didn’t activate the venv.
+```bash
+cd /path/to/PrismEX
+source .venv/bin/activate
+prismex --help
+```
+
+If you want to run without activating:
+```bash
+./.venv/bin/python -m prismex.cli --help
+```
+
+## Windows: activation commands differ
+- PowerShell: `.\.venv\Scripts\Activate.ps1`
+- CMD: `.\.venv\Scriptsctivate.bat`
+
+## Windows: `magic` / `libmagic` errors
+Install:
+```bat
+python -m pip install python-magic-bin
+```
+
+---
+
+# Disclaimer
+
+PrismEX is provided for defensive analysis and research. Only analyze binaries you have permission to inspect, and follow applicable laws and policies.
